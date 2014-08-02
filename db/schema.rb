@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140802225102) do
+ActiveRecord::Schema.define(version: 20140802231624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "categories", force: true do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -26,8 +32,8 @@ ActiveRecord::Schema.define(version: 20140802225102) do
     t.datetime "failed_at"
     t.string   "locked_by"
     t.string   "queue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
@@ -36,6 +42,27 @@ ActiveRecord::Schema.define(version: 20140802225102) do
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "exchange_rates", force: true do |t|
+    t.string   "anchor",     null: false
+    t.string   "float",      null: false
+    t.decimal  "rate",       null: false
+    t.date     "starts_on",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "expenses", force: true do |t|
+    t.integer  "user_id",     null: false
+    t.date     "date",        null: false
+    t.integer  "category_id", null: false
+    t.string   "description", null: false
+    t.string   "currency",    null: false
+    t.decimal  "amount",      null: false
+    t.string   "status",      null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "job_title_assignments", force: true do |t|
