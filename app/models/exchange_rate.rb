@@ -1,3 +1,5 @@
 class ExchangeRate < ActiveRecord::Base
-  validates :anchor, :float, :rate, :starts_on, presence: true
+  CURRENCIES = %w(USD CAD CNY HKD)
+  validates :rate, :starts_on, presence: true
+  validates :anchor, :float, inclusion: { in: CURRENCIES, allow_blank: false }
 end
