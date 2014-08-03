@@ -10,6 +10,17 @@ feature "Expenses" do
     expect(page).to_not have_selector "tr#expense_#{other_user_expense.id}"
   end
 
+  scenario "Creating expense auto-assigns it to current_user", js: true do
+    user = create(:user)
+    create(:category, name: "Test category")
+    visit expenses_path(as: user)
+    fill_form(:expense, date: "2013-01-01", category: "Test category", description: "Test desc", currency: "CNY", amount: "12.19")
+    click_button "Create Expense"
+    expect(page).to have_selector "tr.expense", count: 1
+    expect(Expense.count).to eq 1
+    expect(Expense.last.user).to eq user
+  end
+
   scenario "Destroying an expense", js: true do
     user = create(:user)
     expense = create(:expense, user: user)

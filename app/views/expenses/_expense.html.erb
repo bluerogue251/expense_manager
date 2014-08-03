@@ -2,6 +2,6 @@
   <td>expense.currency</td>
   <td>expense.amount</td>
   <td>
-    <%= link_to fa_icon('times'), expense, method: :delete, remote: true, id: "destroy_expense_#{expense.id}", data: { confirm: "Delete expense?" } %>
+    <%= link_to fa_icon('times', text: 'delete'), expense, method: :delete, remote: true, id: "destroy_expense_#{expense.id}", data: { confirm: "Delete expense?" } %>
   </td>
 <% end %>

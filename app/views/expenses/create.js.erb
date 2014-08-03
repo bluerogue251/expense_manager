@@ -1,0 +1,9 @@
+var table = $("table#expenses");
+var form = $("form");
+
+<% if @expense.errors.any? %>
+  form.find(".errors").replaceWith("<%= j render "shared/errors", object: @expense %>").fadeIn();
+<% else %>
+  form.reset();
+  table.append("<%= j render @expense %>");
+<% end %>
