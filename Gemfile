@@ -21,6 +21,7 @@ gem "title"
 gem "uglifier"
 gem "unicorn"
 gem "clearance"
+gem "font-awesome-rails"
 
 group :development do
   gem "foreman"
