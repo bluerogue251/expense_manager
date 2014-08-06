@@ -30,6 +30,19 @@ feature "Expenses" do
     expect(page).to have_selector ".error", text: "Date can't be blank"
   end
 
+  scenario "Editing and expense", js: true do
+    user = create(:user)
+    expense = create(:expense, user: user, description: "Old description")
+    visit expenses_path(as: user)
+    # saos
+    click_link "edit"
+    within "form#edit_expense_#{expense.id}" do
+      fill_in "expense_description", with: "New description"
+    end
+    click_button "Update Expense"
+    expect(page).to have_selector "td", text: "New description"
+    expect(expense.reload.description).to eq "New description"
+  end
 
   scenario "Destroying an expense", js: true do
     user = create(:user)

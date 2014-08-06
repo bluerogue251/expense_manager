@@ -7,3 +7,11 @@
 
 @import 'font-awesome';
 @import 'jquery-ui/datepicker';
+
+.edit {
+  color: darken($notice-color, 60);
+}
+
+.destroy {
+  color: darken($error-color, 60);
+}

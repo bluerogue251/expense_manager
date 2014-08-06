@@ -6,4 +6,6 @@ class Expense < ActiveRecord::Base
   validates :user, :date, :category, :description, :amount, presence: true
   validates :status, inclusion: { in: STATUSES, allow_blank: false }
   validates :currency, inclusion: { in: ExchangeRate::CURRENCIES, allow_blank: false }
+
+  delegate :name, to: :category, prefix: true
 end
