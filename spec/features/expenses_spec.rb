@@ -21,6 +21,16 @@ feature "Expenses" do
     expect(Expense.last.user).to eq user
   end
 
+  scenario "Creating expense with invalid data", js: true do
+    user = create(:user)
+    create(:category, name: "Test category")
+    visit expenses_path(as: user)
+    fill_form(:expense, date: "not-a-date", category: "Test category", description: "Test desc", currency: "CNY", amount: "12.19")
+    click_button "Create Expense"
+    expect(page).to have_selector ".error", text: "Date can't be blank"
+  end
+
+
   scenario "Destroying an expense", js: true do
     user = create(:user)
     expense = create(:expense, user: user)

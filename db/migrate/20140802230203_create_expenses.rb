@@ -7,7 +7,7 @@ class CreateExpenses < ActiveRecord::Migration
       t.string :description, null: false
       t.string :currency, null: false
       t.decimal :amount, null: false
-      t.string :status, null: false
+      t.string :status, null: false, default: "Pending"
 
       t.timestamps null: false
     end

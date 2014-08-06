@@ -54,15 +54,15 @@ ActiveRecord::Schema.define(version: 20140802231624) do
   end
 
   create_table "expenses", force: true do |t|
-    t.integer  "user_id",     null: false
-    t.date     "date",        null: false
-    t.integer  "category_id", null: false
-    t.string   "description", null: false
-    t.string   "currency",    null: false
-    t.decimal  "amount",      null: false
-    t.string   "status",      null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "user_id",                         null: false
+    t.date     "date",                            null: false
+    t.integer  "category_id",                     null: false
+    t.string   "description",                     null: false
+    t.string   "currency",                        null: false
+    t.decimal  "amount",                          null: false
+    t.string   "status",      default: "Pending", null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   create_table "job_title_assignments", force: true do |t|

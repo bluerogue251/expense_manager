@@ -12,4 +12,10 @@ describe Expense do
 
   it { should ensure_inclusion_of(:status).in_array(Expense::STATUSES) }
   it { should ensure_inclusion_of(:currency).in_array(ExchangeRate::CURRENCIES).allow_blank(false) }
+
+  describe "#status" do
+    it "Should have a default value of 'Pending'" do
+      expect(Expense.new.status).to eq "Pending"
+    end
+  end
 end

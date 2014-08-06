@@ -1,14 +1,6 @@
 h1 Expenses list
 
-<%= simple_form_for @expense, remote: true do |f| %>
-  <%= render "shared/errors", object: f.object %>
-  <%= f.input :date, as: :string %>
-  <%= f.association :category %>
-  <%= f.input :description %>
-  <%= f.input :currency %>
-  <%= f.input :amount %>
-  <%= f.button :submit %>
-<% end %>
+<%= render 'form' %>
 
 <table id="expenses">
   <%= render @expenses %>
