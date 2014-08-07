@@ -2,7 +2,7 @@
 <hr></hr>
 
 <div class="cards">
-  <div class="card">
+  <div id="rejected-card" class="card">
     <div class="card-image">
       <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/mountains.png" alt="">
     </div>
@@ -14,14 +14,14 @@
     </div>
     <div class="card-stats">
       <ul>
-        <li>98<span>Items</span></li>
-        <li>298<span>Things</span></li>
-        <li>923<span>Objects</span></li>
+        <li class="count   "><%= @rejected_count %><span> <%= "Expense".pluralize(@rejected_count) %></span></li>
+        <li class="total   "><%= @rejected_total %><span> <%= current_user.default_currency %></span></li>
+        <li class="earliest"><%= @rejected_earliest %> <span>earliest</span></li>
       </ul>
     </div>
   </div>
 
-  <div class="card">
+  <div id="pending-card" class="card">
     <div class="card-image">
       <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/mountains-4.png" alt="">
     </div>
@@ -29,18 +29,18 @@
       Pending
     </div>
     <div class="card-copy">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, officiis sunt neque facilis culpa molestiae necessitatibus delectus veniam provident.</p>
+      <p>These expenses will be reviewed by your supervisor before the 10th of the next month.</p>
     </div>
     <div class="card-stats">
       <ul>
-        <li>98<span>Items</span></li>
-        <li>298<span>Things</span></li>
-        <li>923<span>Objects</span></li>
+        <li class="count   "><%= @pending_count %><span> <%= "Expense".pluralize(@pending_count) %></span></li>
+        <li class="total   "><%= @pending_total %><span> <%= current_user.default_currency %></span></li>
+        <li class="earliest"><%= @pending_earliest %> <span>earliest</span></li>
       </ul>
     </div>
   </div>
 
-  <div class="card">
+  <div id="approved-card" class="card">
     <div class="card-image">
       <img src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/mountains-3.png" alt="">
     </div>
@@ -48,13 +48,13 @@
       Approved
     </div>
     <div class="card-copy">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, officiis sunt neque facilis culpa molestiae necessitatibus delectus veniam provident.</p>
+      <p>These expenses have been approved by your supervisor and will be reimbursed by the 15th of the next month.</p>
     </div>
     <div class="card-stats">
       <ul>
-        <li>98<span>Items</span></li>
-        <li>298<span>Things</span></li>
-        <li>923<span>Objects</span></li>
+        <li class="total"><%= @approved_total %><span> <%= current_user.default_currency %> total</span></li>
+        <li class="paid "><%= @approved_paid  %><span> <%= current_user.default_currency %> paid</span></li>
+        <li class="due  "><%= @approved_due   %> <span><%= current_user.default_currency %> due</span></li>
       </ul>
     </div>
   </div>

@@ -1,9 +1,71 @@
-require 'spec_helper'
+require "spec_helper"
 
-describe 'Dashboard' do
-  it 'Is the root page' do
+feature "Dashboard" do
+  scenario "Navigating to the root path takes you to the Dashboard show page" do
     user = create(:user)
     visit root_path(as: user)
-    expect(page).to have_selector 'h1', text: 'Expenses dashboard'
+    expect(page).to have_selector "h1", text: "Expenses dashboard"
+  end
+
+  scenario "For Rejected expenses, it displays total count" do
+    user = create(:user)
+    create(:expense, user: user, status: "Rejected")
+    visit root_path(as: user)
+    expect(page).to have_selector "#rejected-card li.count", text: "1 Expense"
+  end
+
+  scenario "For Rejected expenses, it displays total amount in the User's default_currency" do
+    user = create(:user, default_currency: "CNY")
+    create(:expense, currency: "CNY", amount: 1, user: user, status: "Rejected")
+    visit root_path(as: user)
+    expect(page).to have_selector "#rejected-card li.total", text: "1.00 CNY"
+  end
+
+  scenario "For Rejected expenses, it displays the earliest date" do
+    user = create(:user)
+    create(:expense, user: user, status: "Rejected", date: "2013-01-01")
+    visit root_path(as: user)
+    expect(page).to have_selector "#rejected-card li.earliest", text: "2013-01-01 earliest"
+  end
+
+  scenario "For Pending expenses, it displays total count" do
+    user = create(:user)
+    create(:expense, user: user, status: "Pending")
+    visit root_path(as: user)
+    expect(page).to have_selector "#pending-card li.count", text: "1 Expense"
+  end
+
+  scenario "For Pending expenses, it displays total amount in the User's default_currency" do
+    user = create(:user, default_currency: "CNY")
+    create(:expense, currency: "CNY", amount: 1, user: user, status: "Pending")
+    visit root_path(as: user)
+    expect(page).to have_selector "#pending-card li.total", text: "1.00 CNY"
+  end
+
+  scenario "For Pending expenses, it displays the earliest date" do
+    user = create(:user)
+    create(:expense, user: user, status: "Pending", date: "2013-01-01")
+    visit root_path(as: user)
+    expect(page).to have_selector "#pending-card li.earliest", text: "2013-01-01 earliest"
+  end
+
+  scenario "For Approved expenses, it displays total amount in the User's default_currency" do
+    user = create(:user, default_currency: "CNY")
+    create(:expense, currency: "CNY", amount: 1, user: user, status: "Approved")
+    visit root_path(as: user)
+    expect(page).to have_selector "#approved-card li.total", text: "1.00 CNY total"
+  end
+
+  scenario "For Approved expenses, it displays total amount paid (reimbursed) in the User's default_currency" do
+    user = create(:user, default_currency: "CNY")
+    visit root_path(as: user)
+    expect(page).to have_selector "#approved-card li.paid", text: "0.00 CNY paid"
+  end
+
+  scenario "For Approved expenses, it displays total amount due (total - paid)" do
+    user = create(:user, default_currency: "CNY")
+    create(:expense, user: user, status: "Approved", amount: 1)
+    visit root_path(as: user)
+    expect(page).to have_selector "#approved-card li.due", text: "1.00 CNY due"
   end
 end

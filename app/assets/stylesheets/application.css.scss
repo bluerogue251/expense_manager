@@ -69,3 +69,28 @@ $super-light-gray: #F6F6F9;
 tbody tr:hover {
   background-color: $super-light-gray;
 }
+
+#rejected-card {
+  .card-header {
+    color: darken($error-color, 60);
+  }
+  .card-image img {
+    background-color: $error-color;
+  }
+}
+
+#pending-card {
+  .card-header {
+    color: darken($notice-color, 60);
+  }
+}
+
+#approved-card {
+  .card-header {
+    color: darken($success-color, 60);
+  }
+  .card-image img {
+    color: darken($success-color, 60);
+    background-color: $success-color;
+  }
+}

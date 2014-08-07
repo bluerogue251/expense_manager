@@ -105,8 +105,9 @@
       span {
         color: $base-font-color;
         font-size: .7em;
-        display: block;
+        // display: block;
         font-weight: normal;
+        margin-left: 0.5em;
       }
     }
   }
