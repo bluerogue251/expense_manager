@@ -9,12 +9,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body class="<%= body_class %>">
-    <%= render 'shared/session_links' %>
-    <div id="flash">
-      <% flash.each do |key, value| %>
-        <div class="flash <%= key %>"><%= value %></div>
-      <% end %>
-    </div>
+  <%= render "layouts/nav" %>
   <%= render "flashes" -%>
   <%= yield %>
   <%= render "javascript" %>

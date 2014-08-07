@@ -6,6 +6,7 @@
 @import 'base/base';
 
 @import 'refills/cards';
+@import 'refills/nav';
 
 @import 'font-awesome';
 @import 'jquery-ui/datepicker';
@@ -93,4 +94,24 @@ tbody tr:hover {
     color: darken($success-color, 60);
     background-color: $success-color;
   }
+}
+
+#clearance {
+  @include span-columns(4);
+  @include shift(4);
+  .submit-field {
+    display: inline-block;
+  }
+
+  .other-links {
+    display: inline-block;
+  }
+}
+
+header {
+  margin-bottom: 20px;
+}
+
+.navigation-tools {
+  height: 100%;
 }

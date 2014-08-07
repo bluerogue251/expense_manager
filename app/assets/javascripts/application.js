@@ -14,3 +14,4 @@
 //= require jquery_ujs
 //= require jquery-ui/datepicker
 //= require_tree .
+//= require_tree ./refills/.
