@@ -8,3 +8,14 @@
 #
 
 User.create!(name: 'Teddy Widom', email: 'theodore.widom@gmail.com', password: 'password')
+
+category_names = [
+  "Hotel",
+  "Travel",
+  "Meals",
+  "Recreation",
+  "Other benefit",
+  "Equipment",
+]
+
+category_names.each { |category_name| Category.create!(name: category_name) }
