@@ -1,0 +1,14 @@
+<%= content_tag_for :tr, expense do %>
+  <td><%= expense.user_name %></td>
+  <td><%= expense.date %></td>
+  <td><%= expense.category_name %></td>
+  <td><%= expense.description %></td>
+  <td><%= expense.currency %></td>
+  <td><%= expense.amount %></td>
+  <td class="status"><%= expense.status %></td>
+  <td>
+    <% unless expense.approved? %>
+      <%= link_to fa_icon('check', text: 'approve'), [:approve, expense], method: :patch, remote: true, id: "approve_expense_#{expense.id}" %>
+    <% end %>
+  </td>
+<% end %>

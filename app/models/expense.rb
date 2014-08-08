@@ -8,8 +8,13 @@ class Expense < ActiveRecord::Base
   validates :currency, inclusion: { in: ExchangeRate::CURRENCIES, allow_blank: false }
 
   delegate :name, to: :category, prefix: true
+  delegate :name, to: :user, prefix: true
 
   scope :rejected,  -> { where(status: "Rejected") }
   scope :pending,   -> { where(status: "Pending") }
   scope :approved,  -> { where(status: "Approved") }
+
+  def approved?
+    status == "Approved"
+  end
 end

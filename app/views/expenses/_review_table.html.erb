@@ -1,0 +1,19 @@
+<table id="expenses" class="datatable hover">
+  <thead>
+    <tr>
+      <td>User</td>
+      <td>Date</td>
+      <td>Category</td>
+      <td>Description</td>
+      <td>Currency</td>
+      <td>Amount</td>
+      <td>Status</td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @expenses.each do |expense| %>
+      <%= render "review_expense", expense: expense %>
+    <% end %>
+  </tbody>
+</table>

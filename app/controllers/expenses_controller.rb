@@ -5,6 +5,16 @@ class ExpensesController < ApplicationController
     @expense = Expense.new
   end
 
+  def review
+    @expenses = Expense.all
+  end
+
+  def approve
+    @expense = Expense.find(params[:id])
+    @expense.update!(status: "Approved")
+    render "update_status"
+  end
+
   def create
     @expense = current_user.expenses.build(expense_params)
     @expense.save

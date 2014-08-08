@@ -1,0 +1,2 @@
+row = $("tr#expense_<%= @expense.id %>");
+row.replaceWith("<%= j render "review_expense", expense: @expense %>");
