@@ -35,19 +35,6 @@ feature "Dashboard" do
     expect(page).to have_selector "#pending-card li.total", text: "1.00 CNY"
   end
 
-  scenario "For Approved expenses, it displays total amount in the User's default_currency" do
-    user = create(:user, default_currency: "CNY")
-    create(:expense, currency: "CNY", amount: 1, user: user, status: "Approved")
-    visit root_path(as: user)
-    expect(page).to have_selector "#approved-card li.total", text: "1.00 CNY total"
-  end
-
-  scenario "For Approved expenses, it displays total amount paid (reimbursed) in the User's default_currency" do
-    user = create(:user, default_currency: "CNY")
-    visit root_path(as: user)
-    expect(page).to have_selector "#approved-card li.paid", text: "0.00 CNY paid"
-  end
-
   scenario "For Approved expenses, it displays total amount due (total - paid)" do
     user = create(:user, default_currency: "CNY")
     create(:expense, user: user, status: "Approved", amount: 1)
