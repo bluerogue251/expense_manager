@@ -5,5 +5,6 @@ FactoryGirl.define do
     sequence(:email) { |n| "test#{n}@test.com" }
     name     "Teddy Widom"
     password "password"
+    default_currency ExchangeRate::CURRENCIES.sample
   end
 end
