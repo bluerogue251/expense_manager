@@ -21,4 +21,11 @@ feature "Navigation" do
     click_link "Profile"
     expect(current_path).to eq edit_user_path(user)
   end
+
+  scenario "Clicking the Review link navigates to the expense review page" do
+    user = create(:user)
+    visit root_path(as: user)
+    click_link "Review"
+    expect(current_path).to eq review_expenses_path
+  end
 end
