@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   include Clearance::User
-  validates :name, presence: true
+  validates :name, :email, presence: true
   validates :default_currency, inclusion: { in: ExchangeRate::CURRENCIES }
 
   has_many :expenses

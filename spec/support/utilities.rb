@@ -4,3 +4,7 @@ def saos
   system "display screenshot.png"
   system "rm screenshot.png"
 end
+
+def saop
+  save_and_open_page
+end

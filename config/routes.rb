@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
   root 'dashboard#show'
   resources :expenses, except: [:new, :show]
-  resources :users, only: :edit
+  resources :users, only: [:edit, :update]
 end
