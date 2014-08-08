@@ -23,6 +23,7 @@ gem "uglifier"
 gem "unicorn"
 gem "clearance"
 gem "font-awesome-rails"
+gem 'jquery-datatables-rails', "~> 2.2.1"
 
 group :development do
   gem "foreman"
