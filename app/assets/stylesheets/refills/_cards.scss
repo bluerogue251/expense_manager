@@ -83,8 +83,13 @@
     padding: $base-line-height/2 $gutter/2;
     overflow: auto;
 
+    ul li.solo {
+      width: 100%;
+    }
+
     ul li {
-      width: 33%;
+      width: 50%;
+      text-align: center;
       display: inline;
       color: $card-stats-color;
       font-weight: 800;

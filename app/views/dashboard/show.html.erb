@@ -14,9 +14,8 @@
     </div>
     <div class="card-stats">
       <ul>
-        <li class="count   "><%= @rejected_count %><span> <%= "Expense".pluralize(@rejected_count) %></span></li>
+        <li class="count   "><%= @dashboard.rejected_count %><span> <%= "Expense".pluralize(@dashboard.rejected_count) %></span></li>
         <li class="total   "><%= @rejected_total %><span> <%= current_user.default_currency %></span></li>
-        <li class="earliest"><%= @rejected_earliest %> <span>earliest</span></li>
       </ul>
     </div>
   </div>
@@ -33,9 +32,8 @@
     </div>
     <div class="card-stats">
       <ul>
-        <li class="count   "><%= @pending_count %><span> <%= "Expense".pluralize(@pending_count) %></span></li>
+        <li class="count   "><%= @dashboard.pending_count %><span> <%= "Expense".pluralize(@dashboard.pending_count) %></span></li>
         <li class="total   "><%= @pending_total %><span> <%= current_user.default_currency %></span></li>
-        <li class="earliest"><%= @pending_earliest %> <span>earliest</span></li>
       </ul>
     </div>
   </div>
@@ -48,13 +46,11 @@
       Approved
     </div>
     <div class="card-copy">
-      <p>These expenses have been approved by your supervisor and will be reimbursed by the 15th of the next month.</p>
+      <p>These expenses have been approved by your supervisor and will be reimbursed by the 15th of the following month.</p>
     </div>
     <div class="card-stats">
       <ul>
-        <li class="total"><%= @approved_total %><span> <%= current_user.default_currency %> total</span></li>
-        <li class="paid "><%= @approved_paid  %><span> <%= current_user.default_currency %> paid</span></li>
-        <li class="due  "><%= @approved_due   %> <span><%= current_user.default_currency %> due</span></li>
+        <li class="due solo"><%= @approved_due %> <span><%= current_user.default_currency %> due</span></li>
       </ul>
     </div>
   </div>
