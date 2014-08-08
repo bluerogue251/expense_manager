@@ -29,4 +29,16 @@ feature "Reviewing (approving/rejecting) Expenses", js: :true do
     end
   end
 
+  scenario "Resetting an expense to Pending" do
+    expense = create(:expense, status: "Rejected")
+    visit review_expenses_path(as: user)
+    within "tr#expense_#{expense.id}" do
+      expect(page).to have_selector "td.status", text: "Rejected"
+      click_link "pend"
+      expect(page).to have_selector "td.status", text: "Pending"
+      expect(expense.reload.status).to eq "Pending"
+      # The expense is now pending, so the 'reject' link gets hidden
+      expect(page).to_not have_link "pend"
+    end
+  end
 end

@@ -7,11 +7,14 @@
   <td><%= expense.amount %></td>
   <td class="status"><%= expense.status %></td>
   <td>
-    <% unless expense.approved? %>
-      <%= link_to fa_icon('check', text: 'approve'), [:approve, expense], method: :patch, remote: true, id: "approve_expense_#{expense.id}" %>
+    <% unless expense.pending? %>
+      <%= link_to fa_icon('step-backward', text: 'pend'), [:pend, expense], method: :patch, remote: true, id: "pend_expense_#{expense.id}", class: "status-link" %>
     <% end %>
     <% unless expense.rejected? %>
-      <%= link_to fa_icon('times', text: 'reject'), [:reject, expense], method: :patch, remote: true, id: "reject_expense_#{expense.id}" %>
+      <%= link_to fa_icon('times', text: 'reject'), [:reject, expense], method: :patch, remote: true, id: "reject_expense_#{expense.id}", class: "reject status-link" %>
+    <% end %>
+    <% unless expense.approved? %>
+      <%= link_to fa_icon('check', text: 'approve'), [:approve, expense], method: :patch, remote: true, id: "approve_expense_#{expense.id}", class: "approve status-link" %>
     <% end %>
   </td>
 <% end %>

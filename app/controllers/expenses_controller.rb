@@ -21,6 +21,12 @@ class ExpensesController < ApplicationController
     render "update_status"
   end
 
+  def pend
+    @expense = Expense.find(params[:id])
+    @expense.update!(status: "Pending")
+    render "update_status"
+  end
+
   def create
     @expense = current_user.expenses.build(expense_params)
     @expense.save

@@ -132,3 +132,16 @@ header {
     display: inline-block;
   }
 }
+
+.reject {
+  color: darken($error-color, 60);
+}
+
+.approve {
+  color: darken($success-color, 60);
+}
+
+
+.status-link {
+  margin-right: 10px;
+}

@@ -21,4 +21,8 @@ class Expense < ActiveRecord::Base
   def rejected?
     status == "Rejected"
   end
+
+  def pending?
+    status == "Pending"
+  end
 end
