@@ -14,18 +14,23 @@ class Expense < ActiveRecord::Base
   scope :pending,   -> { where(status: "Pending") }
   scope :approved,  -> { where(status: "Approved") }
 
-  def self.by_category_in(currency)
-    joins_exchange_rates_and_categories(currency)
-    .select("categories.name, '#{currency}'::text as sum_currency, sum(expenses.amount * exchange_rates.rate) as sum_amount")
-    .group("expenses.category_id, categories.name")
+  # def self.by_category_in(currency)
+  #   joins_exchange_rates(currency)
+  #   .joins(:category)
+  #   .select("categories.name, '#{currency}'::text as sum_currency, sum(expenses.amount * exchange_rates.rate) as sum_amount")
+  #   .group("expenses.category_id, categories.name")
+  # end
+
+  def self.sum_in(currency)
+    joins_exchange_rates(currency)
+    .sum("CASE WHEN expenses.currency = '#{currency}' THEN expenses.amount ELSE (expenses.amount * exchange_rates.rate) END")
   end
 
-  def self.joins_exchange_rates_and_categories(currency)
-    joins(:category)
-    .joins("LEFT OUTER JOIN exchange_rates
-            ON exchange_rates.anchor = expenses.currency
-            AND exchange_rates.float = '#{currency}'
-            AND expenses.date BETWEEN exchange_rates.starts_on AND exchange_rates.ends_on")
+  def self.joins_exchange_rates(currency)
+    joins("LEFT OUTER JOIN exchange_rates
+             ON exchange_rates.anchor = expenses.currency
+             AND exchange_rates.float = '#{currency}'
+             AND expenses.date BETWEEN exchange_rates.starts_on AND exchange_rates.ends_on")
   end
 
   def approved?

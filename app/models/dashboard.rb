@@ -1,7 +1,10 @@
 class Dashboard
 
+  attr_reader :currency
+
   def initialize(user)
     @user = user
+    @currency = user.default_currency
   end
 
   def rejected_count
@@ -15,6 +18,15 @@ class Dashboard
   def approved_count
     approved_expenses.count
   end
+
+  def rejected_total
+    rejected_expenses.sum_in(@currency)
+  end
+
+  def pending_total
+    pending_expenses.sum_in(@currency)
+  end
+
 
   private
 
@@ -33,5 +45,4 @@ class Dashboard
   def approved_expenses
     expenses.approved
   end
-
 end

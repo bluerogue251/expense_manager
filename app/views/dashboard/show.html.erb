@@ -15,7 +15,7 @@
     <div class="card-stats">
       <ul>
         <li class="count   "><%= @dashboard.rejected_count %><span> <%= "Expense".pluralize(@dashboard.rejected_count) %></span></li>
-        <li class="total   "><%= @rejected_total %><span> <%= current_user.default_currency %></span></li>
+        <li class="total   "><%= number_with_precision @dashboard.rejected_total, precision: 2 %><span> <%= @dashboard.currency %></span></li>
       </ul>
     </div>
   </div>
@@ -33,7 +33,7 @@
     <div class="card-stats">
       <ul>
         <li class="count   "><%= @dashboard.pending_count %><span> <%= "Expense".pluralize(@dashboard.pending_count) %></span></li>
-        <li class="total   "><%= @pending_total %><span> <%= current_user.default_currency %></span></li>
+        <li class="total   "><%= number_with_precision @dashboard.pending_total, precision: 2 %><span> <%= @dashboard.currency %></span></li>
       </ul>
     </div>
   </div>
@@ -50,7 +50,7 @@
     </div>
     <div class="card-stats">
       <ul>
-        <li class="due solo"><%= @approved_due %> <span><%= current_user.default_currency %> due</span></li>
+        <li class="due solo"><%= @approved_due %> <span><%= @dashboard.currency %> due</span></li>
       </ul>
     </div>
   </div>
