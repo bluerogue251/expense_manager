@@ -106,10 +106,6 @@ header {
   margin-bottom: 20px;
 }
 
-.navigation-tools {
-  height: 100%;
-}
-
 .dataTables_filter {
   @include span-columns(3);
   label {
