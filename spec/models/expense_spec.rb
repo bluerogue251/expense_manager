@@ -18,4 +18,14 @@ describe Expense do
       expect(Expense.new.status).to eq "Pending"
     end
   end
+
+  describe "self#by_category_in('currency_code')" do
+    it "Converts expenses to a common currency, then sums them up" do
+      create(:exchange_rate, anchor: "USD", float: "CNY", rate: 6, starts_on: "2000-01-01")
+      create(:expense, currency: "CNY", amount: 6, date: "2000-01-01")
+      expense = Expense.by_category_in("USD").first
+      expect(expense.sum_currency).to eq "USD"
+      expect(expense.sum_amount).to eq "1"
+    end
+  end
 end
