@@ -15,6 +15,12 @@ class ExpensesController < ApplicationController
     render "update_status"
   end
 
+  def reject
+    @expense = Expense.find(params[:id])
+    @expense.update!(status: "Rejected")
+    render "update_status"
+  end
+
   def create
     @expense = current_user.expenses.build(expense_params)
     @expense.save

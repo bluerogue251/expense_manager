@@ -17,4 +17,8 @@ class Expense < ActiveRecord::Base
   def approved?
     status == "Approved"
   end
+
+  def rejected?
+    status == "Rejected"
+  end
 end

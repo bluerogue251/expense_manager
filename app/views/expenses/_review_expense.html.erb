@@ -10,5 +10,8 @@
     <% unless expense.approved? %>
       <%= link_to fa_icon('check', text: 'approve'), [:approve, expense], method: :patch, remote: true, id: "approve_expense_#{expense.id}" %>
     <% end %>
+    <% unless expense.rejected? %>
+      <%= link_to fa_icon('times', text: 'reject'), [:reject, expense], method: :patch, remote: true, id: "reject_expense_#{expense.id}" %>
+    <% end %>
   </td>
 <% end %>
