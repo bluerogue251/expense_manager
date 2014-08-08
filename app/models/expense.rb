@@ -15,14 +15,17 @@ class Expense < ActiveRecord::Base
   scope :approved,  -> { where(status: "Approved") }
 
   def self.by_category_in(currency)
-    join_exchange_rate
-    .joins(:category)
-    .select("categories.name, '#{currency}' as sum_currency, sum(amount) as sum_amount")
-    .group("expenses.category_id")
+    joins_exchange_rates_and_categories(currency)
+    .select("categories.name, '#{currency}'::text as sum_currency, sum(expenses.amount * exchange_rates.rate) as sum_amount")
+    .group("expenses.category_id, categories.name")
   end
 
-  def self.join_exchange_rate
-    joins("LEFT OUTER JOIN exchange_rates ON expenses.currency = exchange_rates.anchor AND expenses.date >= exchange_rates.starts_on ORDER BY exchange_rates.starts_on DESC LIMIT 1")
+  def self.joins_exchange_rates_and_categories(currency)
+    joins(:category)
+    .joins("LEFT OUTER JOIN exchange_rates
+            ON exchange_rates.anchor = expenses.currency
+            AND exchange_rates.float = '#{currency}'
+            AND expenses.date BETWEEN exchange_rates.starts_on AND exchange_rates.ends_on")
   end
 
   def approved?

@@ -5,6 +5,7 @@ FactoryGirl.define do
     anchor "MyString"
     float "MyString"
     rate ""
-    starts_on "2014-08-02"
+    starts_on "1500-01-01"
+    ends_on "3000-01-01"
   end
 end
