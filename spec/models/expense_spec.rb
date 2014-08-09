@@ -52,4 +52,17 @@ describe Expense do
       expect(Expense.for_month("2014-02")).to eq [feb_2014]
     end
   end
+
+  describe "self.with_department_and_job_title" do
+    it "Joins based on the user's department and job title on the date of the expense" do
+      user         = create(:user)
+      job_title    = create(:job_title, name: "test jt")
+      department   = create(:department, name: "test dp")
+      create(:job_title_assignment, user: user, job_title: job_title, department: department)
+      create(:expense, user: user)
+      expense = Expense.with_department_and_job_title.load.first
+      expect(expense.job_title_name).to eq "test jt"
+      expect(expense.department_name).to eq "test dp"
+    end
+  end
 end

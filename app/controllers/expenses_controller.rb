@@ -6,7 +6,7 @@ class ExpensesController < ApplicationController
   end
 
   def review
-    @expenses = Expense.all
+    @expenses = Expense.with_department_and_job_title
   end
 
   def approve

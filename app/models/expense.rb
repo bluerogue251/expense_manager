@@ -34,6 +34,28 @@ class Expense < ActiveRecord::Base
              AND expenses.date BETWEEN exchange_rates.starts_on AND exchange_rates.ends_on")
   end
 
+  def self.with_department_and_job_title
+    job_title_assignment_join
+    .department_join
+    .job_title_join
+    .select("expenses.*, departments.name as department_name, job_titles.name as job_title_name")
+  end
+
+  def self.job_title_assignment_join
+    joins("LEFT OUTER JOIN job_title_assignments
+           ON expenses.user_id = job_title_assignments.user_id
+           AND expenses.date BETWEEN job_title_assignments.starts_on AND job_title_assignments.ends_on")
+  end
+
+  def self.department_join
+    joins("LEFT OUTER JOIN departments ON job_title_assignments.department_id = departments.id")
+  end
+
+  def self.job_title_join
+    joins("LEFT OUTER JOIN job_titles ON job_title_assignments.job_title_id = job_titles.id")
+  end
+
+
   def approved?
     status == "Approved"
   end
