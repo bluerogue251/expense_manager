@@ -50,7 +50,7 @@
     </div>
     <div class="card-stats">
       <ul>
-        <li class="due solo"><%= @approved_due %> <span><%= @dashboard.currency %> due</span></li>
+        <li class="due solo"><%= number_with_precision @dashboard.approved_total, precision: 2 %> <span><%= @dashboard.currency %> (<%= @dashboard.month %>)</span></li>
       </ul>
     </div>
   </div>

@@ -13,6 +13,7 @@ class Expense < ActiveRecord::Base
   scope :rejected,  -> { where(status: "Rejected") }
   scope :pending,   -> { where(status: "Pending") }
   scope :approved,  -> { where(status: "Approved") }
+  scope :for_month, lambda { |month| where("to_char(date, 'YYYY-MM') = ?", month) }
 
   # def self.by_category_in(currency)
   #   joins_exchange_rates(currency)

@@ -1,10 +1,11 @@
 class Dashboard
 
-  attr_reader :currency
+  attr_reader :currency, :month
 
-  def initialize(user)
-    @user = user
+  def initialize(user, date=1.month.ago)
+    @user     = user
     @currency = user.default_currency
+    @month    = date.strftime("%Y-%m")
   end
 
   def rejected_count
@@ -27,6 +28,9 @@ class Dashboard
     pending_expenses.sum_in(@currency)
   end
 
+  def approved_total
+    expenses.for_month(@month).approved.sum_in(@currency)
+  end
 
   private
 

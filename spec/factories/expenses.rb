@@ -8,6 +8,6 @@ FactoryGirl.define do
     description "MyString"
     currency ExchangeRate::CURRENCIES.sample
     amount 99.99
-    status "Pending"
+    status Expense::STATUSES.sample
   end
 end

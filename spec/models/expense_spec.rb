@@ -42,4 +42,14 @@ describe Expense do
       expect(Expense.sum_in("HKD")).to eq BigDecimal.new(60)
     end
   end
+
+  describe "self#for_month" do
+    it "Filters expenses to include only those in that particular month AND YEAR" do
+      feb_2013 = create(:expense, date: "2013-02-10")
+      jan_2014 = create(:expense, date: "2014-01-15")
+      feb_2014 = create(:expense, date: "2014-02-20")
+      mar_2014 = create(:expense, date: "2014-03-25")
+      expect(Expense.for_month("2014-02")).to eq [feb_2014]
+    end
+  end
 end

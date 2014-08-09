@@ -35,10 +35,12 @@ feature "Dashboard" do
     expect(page).to have_selector "#pending-card li.total", text: "1.00 CNY"
   end
 
-  scenario "For Approved expenses, it displays total amount due (total - paid)" do
+  scenario "For Approved expenses, it displays total amount from the last month" do
     user = create(:user, default_currency: "CNY")
-    create(:expense, user: user, status: "Approved", amount: 1)
-    visit root_path(as: user)
-    expect(page).to have_selector "#approved-card li.due", text: "1.00 CNY due"
+    create(:expense, user: user, currency: "CNY", status: "Approved", amount: 1, date: "2011-01-01")
+    Timecop.travel("2011-02-01") do
+      visit root_path(as: user)
+      expect(page).to have_selector "#approved-card li.due", text: "1.00 CNY (2011-01)"
+    end
   end
 end
