@@ -48,10 +48,6 @@
     <div class="card-copy">
       <p>These expenses have been approved by your supervisor and will be reimbursed by the 15th of the following month.</p>
     </div>
-    <div class="card-stats">
-      <ul>
-        <li class="due solo"><%= number_with_precision @dashboard.approved_total, precision: 2 %> <span><%= @dashboard.currency %> (<%= @dashboard.month %>)</span></li>
-      </ul>
-    </div>
+    <%= render 'approved_card_stats' %>
   </div>
 </div>

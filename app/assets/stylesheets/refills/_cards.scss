@@ -83,8 +83,12 @@
     padding: $base-line-height/2 $gutter/2;
     overflow: auto;
 
-    ul li.solo {
-      width: 100%;
+    ul li.due {
+      width: 50%;
+    }
+
+    ul li.arrow {
+      width: 25%;
     }
 
     ul li {

@@ -5,4 +5,9 @@ class DashboardController < ApplicationController
     @dashboard = Dashboard.new(current_user)
   end
 
+  def change_month
+    month = Date.parse(params[:month])
+    @dashboard = Dashboard.new(current_user, month)
+  end
+
 end

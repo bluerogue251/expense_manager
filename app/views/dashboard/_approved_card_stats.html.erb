@@ -1,0 +1,7 @@
+<div class="card-stats">
+  <ul>
+    <li class="arrow"><%= link_to fa_icon('arrow-left'), change_dashboard_month_path(month: @dashboard.previous_month), method: :patch, remote: true, id: 'previous-month' %></li>
+    <li class="due"><%= number_with_precision @dashboard.approved_total, precision: 2 %> <span><%= @dashboard.currency %> (<%= @dashboard.month %>)</span></li>
+    <li class="arrow"><%= link_to fa_icon('arrow-right'), change_dashboard_month_path(month: @dashboard.next_month), method: :patch, remote: true, id: 'next-month' %></li>
+  </ul>
+</div>

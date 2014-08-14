@@ -1,11 +1,13 @@
 class Dashboard
 
-  attr_reader :currency, :month
+  attr_reader :currency, :previous_month, :month, :next_month
 
   def initialize(user, date=1.month.ago)
-    @user     = user
-    @currency = user.default_currency
-    @month    = date.strftime("%Y-%m")
+    @user           = user
+    @currency       = user.default_currency
+    @previous_month = (date - 1.month).to_date
+    @month          = date.strftime("%Y-%m")
+    @next_month     = (date + 1.month).to_date
   end
 
   def rejected_count

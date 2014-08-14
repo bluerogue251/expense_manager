@@ -43,4 +43,28 @@ feature "Dashboard" do
       expect(page).to have_selector "#approved-card li.due", text: "1.00 CNY (2011-01)"
     end
   end
+
+  scenario "Clicking the back arrow shows approved expenses for the previous month", js: true do
+    user = create(:user, default_currency: "USD")
+    create(:expense, user: user, currency: "USD", status: "Approved", amount: 3, date: "2011-03-01")
+    create(:expense, user: user, currency: "USD", status: "Approved", amount: 2, date: "2011-02-01")
+    Timecop.travel("2011-04-01") do
+      visit root_path(as: user)
+      expect(page).to have_selector "#approved-card li.due", text: "3.00 USD (2011-03)"
+      click_link "previous-month"
+      expect(page).to have_selector "#approved-card li.due", text: "2.00 USD (2011-02)"
+    end
+  end
+
+  scenario "Clicking the forward arrow shows approved expenses for the next month", js: true do
+    user = create(:user, default_currency: "USD")
+    create(:expense, user: user, currency: "USD", status: "Approved", amount: 2, date: "2011-02-01")
+    create(:expense, user: user, currency: "USD", status: "Approved", amount: 3, date: "2011-03-01")
+    Timecop.travel("2011-03-01") do
+      visit root_path(as: user)
+      expect(page).to have_selector "#approved-card li.due", text: "2.00 USD (2011-02)"
+      click_link "next-month"
+      expect(page).to have_selector "#approved-card li.due", text: "3.00 USD (2011-03)"
+    end
+  end
 end

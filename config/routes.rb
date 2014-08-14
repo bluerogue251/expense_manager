@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root 'dashboard#show'
+  patch "/dashboard/change_month/:month", to: "dashboard#change_month", as: "change_dashboard_month"
   resources :expenses, except: [:new, :show] do
     collection { get :review }
     member { patch :approve, :reject, :pend }
