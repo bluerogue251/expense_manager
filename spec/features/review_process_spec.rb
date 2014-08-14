@@ -3,6 +3,10 @@ require 'spec_helper'
 feature "Reviewing (approving/rejecting) Expenses", js: :true do
   let(:user) { create(:user) }
 
+  scenario "Why do we have to use hash notation in view for tests, but not in development" do
+    pending
+  end
+
   scenario "Approving an expense" do
     expense = create(:expense, status: "Pending")
     visit review_expenses_path(as: user)
