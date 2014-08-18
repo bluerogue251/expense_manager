@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Expense do
   it { should belong_to(:user) }
   it { should belong_to(:category) }
+  it { should have_one(:expense_department_and_job_title) }
 
   it { should validate_presence_of(:user) }
   it { should validate_presence_of(:date) }
@@ -53,16 +54,33 @@ describe Expense do
     end
   end
 
-  describe "self.with_department_and_job_title" do
-    it "Joins based on the user's department and job title on the date of the expense" do
-      user         = create(:user)
-      job_title    = create(:job_title, name: "test jt")
-      department   = create(:department, name: "test dp")
-      create(:job_title_assignment, user: user, job_title: job_title, department: department)
-      create(:expense, user: user)
-      expense = Expense.with_department_and_job_title.load.first
-      expect(expense.job_title_name).to eq "test jt"
-      expect(expense.department_name).to eq "test dp"
+  describe "#department_name" do
+    it "Returns the department name of the user, on the date of the expense" do
+      user = create(:user)
+      department = create(:department, name: "test department")
+      create(:job_title_assignment, user: user, department: department)
+      expense = create(:expense, user: user)
+      expect(expense.department_name).to eq "test department"
+    end
+
+    it "Can be nil without throwing an error" do
+      expense = Expense.new
+      expect(expense.department_name).to be_nil
+    end
+  end
+
+  describe "#job_title_name" do
+    it "Returns the job_title_name of the user, on the date of the expense" do
+      user = create(:user)
+      job_title = create(:job_title, name: "test job title")
+      create(:job_title_assignment, user: user, job_title: job_title)
+      expense = create(:expense, user: user)
+      expect(expense.job_title_name).to eq "test job title"
+    end
+
+    it "Can be nil without throwing an error" do
+      expense = Expense.new
+      expect(expense.job_title_name).to be_nil
     end
   end
 end

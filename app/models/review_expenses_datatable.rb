@@ -15,8 +15,8 @@ class ReviewExpensesDatatable
     paginated_records.map do |expense|
       [
         expense.user_name,
-        expense["department_name"],
-        expense["job_title_name"],
+        expense.department_name,
+        expense.job_title_name,
         expense.date,
         expense.category_name,
         expense.description,

@@ -11,7 +11,7 @@ class ExpensesController < ApplicationController
   end
 
   def review
-    @expenses = Expense.with_department_and_job_title
+    @expenses = Expense.all.includes(:expense_department_and_job_title, :category, :user)
     respond_to do |format|
       format.html
       format.json { render json: ReviewExpensesDatatable.new(view_context, @expenses) }
