@@ -45,6 +45,7 @@ feature "Dashboard" do
   end
 
   scenario "Clicking the back arrow shows approved expenses for the previous month", js: true do
+    pending
     user = create(:user, default_currency: "USD")
     create(:expense, user: user, currency: "USD", status: "Approved", amount: 3, date: "2011-03-01")
     create(:expense, user: user, currency: "USD", status: "Approved", amount: 2, date: "2011-02-01")
@@ -57,6 +58,7 @@ feature "Dashboard" do
   end
 
   scenario "Clicking the forward arrow shows approved expenses for the next month", js: true do
+    pending
     user = create(:user, default_currency: "USD")
     create(:expense, user: user, currency: "USD", status: "Approved", amount: 2, date: "2011-02-01")
     create(:expense, user: user, currency: "USD", status: "Approved", amount: 3, date: "2011-03-01")
