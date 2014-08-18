@@ -25,6 +25,8 @@ gem "clearance"
 gem "font-awesome-rails"
 gem 'jquery-datatables-rails', "~> 2.2.1"
 gem 'year_month', github: 'bluerogue251/year_month'
+gem 'kaminari'
+
 
 group :development do
   gem "foreman"

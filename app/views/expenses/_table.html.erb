@@ -1,4 +1,4 @@
-<table id="expenses" class="datatable hover">
+<table id="expenses" class="datatable hover" data-source="<%= expenses_url(format: :json)%>">
   <thead>
     <tr>
       <td></td>
@@ -12,6 +12,5 @@
     </tr>
   </thead>
   <tbody>
-    <%= render @expenses %>
   </tbody>
 </table>

@@ -1,8 +1,13 @@
 class ExpensesController < ApplicationController
 
   def index
-    @expenses = current_user.expenses
-    @expense = Expense.new
+    respond_to do |format|
+      format.html do
+        @expenses = current_user.expenses
+        @expense = Expense.new
+      end
+      format.json { render json: ExpensesDatatable.new(view_context, current_user.expenses) }
+    end
   end
 
   def review

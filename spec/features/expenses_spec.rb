@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "Expenses" do
-  scenario "Indexing only shows the signed-in user's expenses" do
+  scenario "Indexing only shows the signed-in user's expenses", js: true do
     signed_in_user         = create(:user)
     signed_in_user_expense = create(:expense, user: signed_in_user)
     other_user_expense     = create(:expense)
