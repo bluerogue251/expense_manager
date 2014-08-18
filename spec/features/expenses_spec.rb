@@ -2,12 +2,14 @@ require "spec_helper"
 
 feature "Expenses" do
   scenario "Indexing only shows the signed-in user's expenses", js: true do
-    signed_in_user         = create(:user)
-    signed_in_user_expense = create(:expense, user: signed_in_user)
-    other_user_expense     = create(:expense)
+    signed_in_user = create(:user)
+    signed_in_users_description = "signed in user's description"
+    other_users_description = "other user's description"
+    create(:expense, description: signed_in_users_description, user: signed_in_user)
+    create(:expense, description: other_users_description)
     visit expenses_path(as: signed_in_user)
-    expect(page).to     have_selector "tr#expense_#{signed_in_user_expense.id}"
-    expect(page).to_not have_selector "tr#expense_#{other_user_expense.id}"
+    expect(page).to     have_content signed_in_users_description
+    expect(page).to_not have_content other_users_description
   end
 
   scenario "Creating expense auto-assigns it to current_user", js: true do
@@ -46,11 +48,12 @@ feature "Expenses" do
 
   scenario "Destroying an expense", js: true do
     user = create(:user)
-    expense = create(:expense, user: user)
+    description = "test description"
+    expense = create(:expense, user: user, description: description)
     visit expenses_path(as: user)
-    expect(page).to have_selector "tr#expense_#{expense.id}"
+    expect(page).to have_content description
     click_link "destroy_expense_#{expense.id}"
-    expect(page).to_not have_selector "tr#expense_#{expense.id}"
+    expect(page).to_not have_content description
     expect(Expense.exists?(expense)).to eq false
   end
 end

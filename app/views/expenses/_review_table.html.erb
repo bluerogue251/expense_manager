@@ -1,4 +1,4 @@
-<table id="expenses" class="datatable hover">
+<table id="expenses" class="datatable hover" data-source="<%= review_expenses_path(format: :json) %>">
   <thead>
     <tr>
       <td>User</td>
@@ -14,8 +14,5 @@
     </tr>
   </thead>
   <tbody>
-    <% @expenses.each do |expense| %>
-      <%= render "review_expense", expense: expense %>
-    <% end %>
   </tbody>
 </table>

@@ -12,6 +12,10 @@ class ExpensesController < ApplicationController
 
   def review
     @expenses = Expense.with_department_and_job_title
+    respond_to do |format|
+      format.html
+      format.json { render json: ReviewExpensesDatatable.new(view_context, @expenses) }
+    end
   end
 
   def approve

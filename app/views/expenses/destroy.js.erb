@@ -1,2 +1,3 @@
-var row = $("tr#expense_<%= @expense.id %>");
-row.hide('slow');
+var table = $("table#expenses");
+table.DataTable().ajax.reload();
+
