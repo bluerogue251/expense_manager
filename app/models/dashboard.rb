@@ -6,7 +6,7 @@ class Dashboard
     @user           = user
     @currency       = user.default_currency
     @previous_month = (date - 1.month).to_date
-    @month          = date.strftime("%Y-%m")
+    @month          = year_month(date)
     @next_month     = (date + 1.month).to_date
   end
 

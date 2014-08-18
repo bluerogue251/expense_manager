@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/bluerogue251/year_month.git
+  revision: e2045e7e2a27fa60832a07513cdd1158971eeda7
+  specs:
+    year_month (0.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -262,3 +268,4 @@ DEPENDENCIES
   uglifier
   unicorn
   webmock
+  year_month!

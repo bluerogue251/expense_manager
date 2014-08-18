@@ -1,6 +1,13 @@
 require 'spec_helper'
 
 describe Dashboard do
+  it "Formats the month as yyyy-mm" do
+    user = User.new
+    date = Date.parse("2013-12-25")
+    dashboard = Dashboard.new(user, date)
+    expect(dashboard.month).to eq "2013-12"
+  end
+
   it "Has counts of Rejected and Pending expenses for a particular user" do
     user = create(:user)
     2.times { create(:expense, user: user, status: "Rejected") }
