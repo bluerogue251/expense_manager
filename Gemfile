@@ -27,7 +27,7 @@ gem 'jquery-datatables-rails', "~> 2.2.1"
 gem 'year_month', github: 'bluerogue251/year_month'
 gem 'kaminari'
 gem 'bullet'
-gem 'sunspot_rails', '~> 1.3.0'
+gem 'sunspot_rails'
 gem 'faker'
 gem "factory_girl_rails"
 
