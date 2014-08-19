@@ -27,6 +27,7 @@ gem 'jquery-datatables-rails', "~> 2.2.1"
 gem 'year_month', github: 'bluerogue251/year_month'
 gem 'kaminari'
 gem 'bullet'
+gem 'sunspot_rails'
 
 group :development do
   gem "foreman"
@@ -41,6 +42,7 @@ group :development, :test do
   gem "factory_girl_rails"
   gem "pry-rails"
   gem "rspec-rails", "~> 2.14.0"
+  gem 'sunspot_solr'
 end
 
 group :test do
@@ -54,5 +56,6 @@ group :test do
 end
 
 group :staging, :production do
+  gem "rails_12factor"
   gem "newrelic_rpm", ">= 3.7.3"
 end

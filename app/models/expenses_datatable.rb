@@ -3,9 +3,10 @@ class ExpensesDatatable
   attr_reader :view_context
   delegate :params, :link_to, :fa_icon, to: :view_context
 
-  def initialize(view_context, model)
-    @scope = model
-    @view_context = view_context
+  def initialize(view_context, all_records, searched_records)
+    @all_records      = all_records
+    @searched_records = searched_records
+    @view_context     = view_context
     @columns = %w(id date category_id description currency amount status id)
   end
 

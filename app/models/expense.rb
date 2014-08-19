@@ -17,6 +17,10 @@ class Expense < ActiveRecord::Base
   scope :approved,  -> { where(status: "Approved") }
   scope :for_month, lambda { |month| where("to_char(date, 'YYYY-MM') = ?", month) }
 
+  searchable do
+    text :description
+  end
+
   def self.sum_in(currency)
     joins_exchange_rates(currency)
     .sum("CASE WHEN expenses.currency = '#{currency}' THEN expenses.amount ELSE (expenses.amount * exchange_rates.rate) END")
