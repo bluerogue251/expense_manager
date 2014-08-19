@@ -16,7 +16,7 @@ feature "Expenses" do
     user = create(:user)
     create(:category, name: "Test category")
     visit expenses_path(as: user)
-    fill_form(:expense, date: "2013-01-01", category: "Test category", description: "Test desc", currency: "CNY", amount: "12.19")
+    fast_fill_form(:expense, date: "2013-01-01", category: "Test category", description: "Test desc", currency: "CNY", amount: "12.19")
     click_button "Create Expense"
     expect(page).to have_selector "td", text: "Test desc", count: 1
     expect(Expense.count).to eq 1
@@ -27,7 +27,7 @@ feature "Expenses" do
     user = create(:user)
     create(:category, name: "Test category")
     visit expenses_path(as: user)
-    fill_form(:expense, date: "not-a-date", category: "Test category", description: "Test desc", currency: "CNY", amount: "12.19")
+    fast_fill_form(:expense, date: "not-a-date", category: "Test category", description: "Test desc", currency: "CNY", amount: "12.19")
     click_button "Create Expense"
     expect(page).to have_selector ".error", text: "Date can't be blank"
   end

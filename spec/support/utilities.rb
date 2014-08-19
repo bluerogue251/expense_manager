@@ -8,3 +8,10 @@ end
 def saop
   save_and_open_page
 end
+
+# See https://github.com/thoughtbot/formulaic/issues/18
+def fast_fill_form(*args)
+  using_wait_time 0 do
+    fill_form *args
+  end
+end
