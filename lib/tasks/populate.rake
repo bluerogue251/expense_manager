@@ -12,7 +12,7 @@ namespace :db do
     JOB_TITLES  = JobTitle.all
 
     def create_1000_expenses(user)
-      100.times do
+      1000.times do
         FactoryGirl.create(:expense, user: user, category: CATEGORIES.sample)
       end
     end
@@ -23,7 +23,7 @@ namespace :db do
     teddy = User.create!(name: 'Teddy Widom', email: 'theodore.widom@gmail.com', password: 'password')
     create_1000_expenses(teddy)
 
-    10.times do
+    200.times do
       puts i
       user = FactoryGirl.create(:user)
       create_1000_expenses(user)

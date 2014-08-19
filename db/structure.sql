@@ -488,17 +488,38 @@ CREATE INDEX delayed_jobs_priority ON delayed_jobs USING btree (priority, run_at
 
 
 --
+-- Name: index_categories_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_categories_on_name ON categories USING btree (name);
+
+
+--
+-- Name: index_departments_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_departments_on_name ON departments USING btree (name);
+
+
+--
+-- Name: index_job_titles_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_job_titles_on_name ON job_titles USING btree (name);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_users_on_email ON users USING btree (email);
+CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 
 
 --
 -- Name: index_users_on_remember_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_users_on_remember_token ON users USING btree (remember_token);
+CREATE UNIQUE INDEX index_users_on_remember_token ON users USING btree (remember_token);
 
 
 --

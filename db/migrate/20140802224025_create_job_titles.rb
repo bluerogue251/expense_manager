@@ -4,5 +4,6 @@ class CreateJobTitles < ActiveRecord::Migration
       t.string :name, null: false
       t.timestamps null: false
     end
+    add_index :job_titles, :name, unique: true
   end
 end
