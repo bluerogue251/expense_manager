@@ -3,10 +3,12 @@ class ExpensesController < ApplicationController
   def index
     respond_to do |format|
       format.html do
-        @expenses = current_user.expenses
         @expense = Expense.new
       end
-      format.json { render json: ExpensesDatatable.new(view_context, current_user.expenses) }
+      format.json do
+        initial_scope = Expense.search { with(:user_id, current_user.id) }
+        render json: ExpensesDatatable.new(view_context, initial_scope)
+      end
     end
   end
 

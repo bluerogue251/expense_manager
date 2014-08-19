@@ -3,17 +3,17 @@ class ExpensesDatatable
   attr_reader :view_context
   delegate :params, :link_to, :fa_icon, to: :view_context
 
-  def initialize(view_context, all_records, searched_records)
-    @all_records      = all_records
-    @searched_records = searched_records
-    @view_context     = view_context
-    @columns = %w(id date category_id description currency amount status id)
+  def initialize(view_context, initial_scope)
+    @view_context    = view_context
+    @initial_scope   = initial_scope
+    @display_records = get_records
+    # @columns = %w(id date category_id description currency amount status id)
   end
 
   private
 
   def data
-    paginated_records.map do |expense|
+    @display_records.map do |expense|
       [
         edit_link(expense),
         expense.date,

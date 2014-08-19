@@ -8,15 +8,26 @@ module DatatablesHelper
     params[:iDisplayLength].to_i > 0 ? params[:iDisplayLength].to_i : 10
   end
 
-  def paginated_records
-    searched_records.page(page).per(per)
+  def sort_direction
+    params[:sSortDir_0] == "desc" ? "desc" : "asc"
+  end
+
+  def sort_column
+    @columns[params[:iSortCol_0].to_i]
+  end
+
+  def get_records
+    records = @initial_scope
+    records = records.build { fulltext params[:sSearch] }
+    records = records.build { paginate page: page, per_page: per }
+    records.results
   end
 
   def as_json(options={})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: @all_records.count,
-      iTotalDisplayRecords: searched_records.count,
+      iTotalRecords: @initial_scope.results.count,
+      iTotalDisplayRecords: @display_records.count,
       aaData: data
     }
   end

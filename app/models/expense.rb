@@ -18,6 +18,7 @@ class Expense < ActiveRecord::Base
   scope :for_month, lambda { |month| where("to_char(date, 'YYYY-MM') = ?", month) }
 
   searchable do
+    integer :user_id
     text :description
   end
 
