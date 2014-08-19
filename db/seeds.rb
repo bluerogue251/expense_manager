@@ -7,8 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 #
 
-User.create!(name: 'Teddy Widom', email: 'theodore.widom@gmail.com', password: 'password')
-
 category_names = [
   "Hotel",
   "Travel",
@@ -17,5 +15,32 @@ category_names = [
   "Other benefit",
   "Equipment",
 ]
-
 category_names.each { |category_name| Category.create!(name: category_name) }
+
+
+department_names = [
+  "Sales",
+  "Purchasing",
+  "Quality control",
+  "Production",
+  "R&D",
+  "Accounting",
+  "Executive"
+]
+department_names.each { |department_name| Department.create(name: department_name) }
+
+
+job_title_names = [
+  "Jr. associate",
+  "Sr. associate",
+  "Manager",
+  "Auditor",
+  "Engineer",
+  "Sourcing specialist",
+  "Jr. Accountant",
+  "Sr. Accountant",
+  "CEO",
+  "CFO",
+  "CTO"
+]
+job_title_names.each { |job_title_name| JobTitle.create(name: job_title_name) }

@@ -29,6 +29,7 @@ gem 'kaminari'
 gem 'bullet'
 gem 'sunspot_rails'
 gem 'faker'
+gem "factory_girl_rails"
 
 group :development do
   gem "foreman"
@@ -40,7 +41,6 @@ group :development, :test do
   gem "awesome_print"
   gem "byebug"
   gem "dotenv-rails"
-  gem "factory_girl_rails"
   gem "pry-rails"
   gem "rspec-rails", "~> 2.14.0"
   gem 'sunspot_solr'

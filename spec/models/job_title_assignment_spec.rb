@@ -4,6 +4,7 @@ describe JobTitleAssignment do
   it { should belong_to(:user) }
   it { should belong_to(:job_title) }
   it { should belong_to(:department) }
+  it { should have_many(:expenses) }
 
   describe "Database-level validation of starts_on and ends_on", js: true do
     it "Does not permit a user to have a start date that overlaps an existing range" do
