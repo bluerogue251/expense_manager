@@ -3,17 +3,33 @@ class ExpensesDatatable
   attr_reader :view_context
   delegate :params, :link_to, :fa_icon, to: :view_context
 
-  def initialize(view_context, initial_scope)
+  def initialize(view_context, current_user_id)
     @view_context    = view_context
-    @initial_scope   = initial_scope
+    @current_user_id = current_user_id
     @display_records = get_records
     # @columns = %w(id date category_id description currency amount status id)
   end
 
   private
 
+  def current_user_id
+    @current_user_id
+  end
+
+  def total_record_count
+    Expense.search { with(:user_id, current_user_id) }.total
+  end
+
+  def get_records
+    Expense.search do
+      with(:user_id, current_user_id)
+      fulltext params[:sSearch]
+      paginate page: page, per_page: per
+    end
+  end
+
   def data
-    @display_records.map do |expense|
+    @display_records.results.map do |expense|
       [
         edit_link(expense),
         expense.date,

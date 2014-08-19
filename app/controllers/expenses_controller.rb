@@ -6,8 +6,7 @@ class ExpensesController < ApplicationController
         @expense = Expense.new
       end
       format.json do
-        initial_scope = Expense.search { with(:user_id, current_user.id) }
-        render json: ExpensesDatatable.new(view_context, initial_scope)
+        render json: ExpensesDatatable.new(view_context, current_user.id)
       end
     end
   end
@@ -16,7 +15,7 @@ class ExpensesController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        render json: ReviewExpensesDatatable.new(view_context, Expense.search)
+        render json: ReviewExpensesDatatable.new(view_context)
       end
     end
   end
