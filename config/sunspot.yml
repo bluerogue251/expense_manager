@@ -1,7 +1,3 @@
-production:
-  solr:
-    hostname: http://index.websolr.com/solr/16cdf07c243
-
 development:
   solr:
     hostname: localhost
