@@ -28,6 +28,7 @@ gem 'year_month', github: 'bluerogue251/year_month'
 gem 'kaminari'
 gem 'bullet'
 gem 'sunspot_rails'
+gem 'faker'
 
 group :development do
   gem "foreman"

@@ -3,11 +3,11 @@
 FactoryGirl.define do
   factory :expense do
     user
-    date "2014-08-02"
+    date random_date
     category
-    description "MyString"
-    currency ExchangeRate::CURRENCIES.sample
-    amount 99.99
-    status Expense::STATUSES.sample
+    description { Faker::Commerce.product_name }
+    currency { ExchangeRate::CURRENCIES.sample }
+    amount { Faker::Number.number(3) }
+    status { Expense::STATUSES.sample }
   end
 end

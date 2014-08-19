@@ -3,8 +3,8 @@
 FactoryGirl.define do
   factory :user do
     sequence(:email) { |n| "test#{n}@test.com" }
-    name     "Teddy Widom"
-    password "password"
+    name     { Faker::Name.name }
+    password { Faker::Internet.password }
     default_currency ExchangeRate::CURRENCIES.sample
   end
 end

@@ -2,9 +2,9 @@
 
 FactoryGirl.define do
   factory :exchange_rate do
-    anchor "MyString"
-    float "MyString"
-    rate ""
+    anchor "USD"
+    float "CNY"
+    rate 6
     starts_on "1500-01-01"
     ends_on "3000-01-01"
   end
