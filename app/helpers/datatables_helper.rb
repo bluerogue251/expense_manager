@@ -20,14 +20,13 @@ module DatatablesHelper
     records = @initial_scope
     records = records.build { fulltext params[:sSearch] }
     records = records.build { paginate page: page, per_page: per }
-    records.results
   end
 
   def as_json(options={})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: @initial_scope.results.count,
-      iTotalDisplayRecords: @display_records.count,
+      iTotalRecords: @initial_scope.total,
+      iTotalDisplayRecords: @display_records.total,
       aaData: data
     }
   end

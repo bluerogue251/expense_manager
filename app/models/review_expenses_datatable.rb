@@ -4,15 +4,20 @@ class ReviewExpensesDatatable
   delegate :params, :link_to, :fa_icon, to: :view_context
 
   def initialize(view_context, model)
-    @scope = model
-    @view_context = view_context
-    @columns = %w(id date category_id description currency amount status id)
+    @view_context    = view_context
+    @initial_scope   = model
+    puts "initial scope"
+    puts @initial_scope.inspect
+    @display_records = get_records
+    puts "display_records"
+    puts @display_records.inspect
+    # @columns = %w(id date category_id description currency amount status id)
   end
 
   private
 
   def data
-    paginated_records.map do |expense|
+    get_records.results.map do |expense|
       [
         expense.user_name,
         expense.department_name,
