@@ -5,28 +5,27 @@ Expense manager
 [![Code Climate](https://codeclimate.com/github/bluerogue251/expense_manager/badges/gpa.svg)](https://codeclimate.com/github/bluerogue251/expense_manager)
 [![Test Coverage](https://codeclimate.com/github/bluerogue251/expense_manager/badges/coverage.svg)](https://codeclimate.com/github/bluerogue251/expense_manager)
 
+This is a Ruby-on-Rails application for tracking company expenses. The code is open source on [Github](https://github.com/bluerogue251/expense_manager), and there is a live demo on [Heroku](http://shielded-falls-2406.herokuapp.com/). Here are some interesting facts about it:
 
-This is a Ruby-on-Rails application for tracking company expenses. Here are some interesting facts about it:
 
 ## Scalable spreadsheet-like searching and sorting
-This app integrates datatables.js on the client-side with Sunspot searching and sorting on the server-side. Users interact with online denormalized "spreadsheets" that can crunch much more data, much faster, than traditional desktop spreadsheet programs. The demo app currently has over 200,000 records, yet searching and sorting is still lightning-fast.
+This app integrates [DataTables](http://www.datatables.net) on the client-side with [Sunspot](https://github.com/sunspot/sunspot) on the server-side to let users search and sort large amounts of data with online "spreadsheets". The demo app currently has over 200,000 records, yet searching and sorting is still lightning-fast.
 
 I found Sunspot to be easier to set up than the other potential solution, materialized views and Postgres full text search.
 
 ## Thoughtbot-oriented programming
-In writing this app, I learned about and used as many of Thoughtbot's open source tools as I could. I started from scratch by running their laptop script to set up a brand new unix user, used suspenders, and stuck with most of their default gems. Thoughtbot is a great Rails product shop, so this was a chance to broaden my horizons and improve my own skills by following their lead.
+I learned about and used as many of [Thoughtbot's](http://thoughtbot.com/) open source tools as I could for this app. I started from scratch by running their [laptop script](https://github.com/thoughtbot/laptop) on a brand new unix user, used [suspenders](https://github.com/thoughtbot/suspenders), and stuck with most of their default gems.
+
+Thoughtbot is a great Rails product shop, so this was a chance to broaden my horizons and improve my own code and workflow by following their example.
 
 ## Time-interval-based SQL joins
 Rails is great at joining records that are related by integer foreign keys. But sometimes, other kinds of joins are necessary for a DRY, normalized database design.
 
 This app relates expenses to exchange rates by a combination of the expense's currency and date, instead of with an `exchange_rate_id`.
 
-For instance, in this app, expenses have a currency and a date which relates them to an exchange rate -- they do not have an `exchange_rate_id`. Expenses can be entered in any currency. When their sums are calculated, the application calculates the conversion of all expenses to the current user's default currency before displaying it.
-
-
 Getting started
 ---------------
-It comes equipped with a self-setup script:
+expense_manager comes equipped with a self-setup script:
 
     % ./bin/setup
 

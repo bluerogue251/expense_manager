@@ -1,6 +1,14 @@
 require "spec_helper"
 
 feature "Dashboard" do
+  scenario "Navigating to the Read me page" do
+    user = create(:user)
+    visit root_path(as: user)
+    click_link "Read me"
+    expect(current_path).to eq readme_path
+    expect(page).to have_selector "h1", text: "Expense manager"
+  end
+
   scenario "Navigating to the root path takes you to the Dashboard show page" do
     user = create(:user)
     visit root_path(as: user)

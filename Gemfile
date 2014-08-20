@@ -31,6 +31,7 @@ gem 'sunspot_rails'
 gem 'faker'
 gem "factory_girl_rails"
 gem "progress_bar"
+gem "redcarpet"
 
 group :development do
   gem "foreman"

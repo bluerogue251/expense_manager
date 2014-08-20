@@ -10,4 +10,7 @@ class DashboardController < ApplicationController
     @dashboard = Dashboard.new(current_user, month)
   end
 
+  def readme
+  end
+
 end
