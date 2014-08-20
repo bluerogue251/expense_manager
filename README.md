@@ -48,4 +48,4 @@ programming in style.
 License
 -------
 
-The MIT license. See LICENSE.txt
+The MIT License. See [LICENSE.txt](https://github.com/bluerogue251/expense_manager/blob/master/LICENSE.txt)
