@@ -233,29 +233,14 @@ CREATE TABLE job_title_assignments (
 
 
 --
--- Name: job_titles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: expense_job_title_assignments; Type: VIEW; Schema: public; Owner: -
 --
 
-CREATE TABLE job_titles (
-    id integer NOT NULL,
-    name character varying(255) NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: expense_department_and_job_titles; Type: VIEW; Schema: public; Owner: -
---
-
-CREATE VIEW expense_department_and_job_titles AS
+CREATE VIEW expense_job_title_assignments AS
  SELECT expenses.id AS expense_id,
-    departments.name AS department_name,
-    job_titles.name AS job_title_name
-   FROM (((expenses
-     JOIN job_title_assignments jta ON (((jta.user_id = expenses.user_id) AND ((expenses.date >= jta.starts_on) AND (expenses.date <= jta.ends_on)))))
-     JOIN job_titles ON ((jta.job_title_id = job_titles.id)))
-     JOIN departments ON ((jta.department_id = departments.id)));
+    job_title_assignments.id AS job_title_assignment_id
+   FROM (expenses
+     JOIN job_title_assignments ON (((job_title_assignments.user_id = expenses.user_id) AND ((expenses.date >= job_title_assignments.starts_on) AND (expenses.date <= job_title_assignments.ends_on)))));
 
 
 --
@@ -294,6 +279,18 @@ CREATE SEQUENCE job_title_assignments_id_seq
 --
 
 ALTER SEQUENCE job_title_assignments_id_seq OWNED BY job_title_assignments.id;
+
+
+--
+-- Name: job_titles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE job_titles (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
 
 
 --

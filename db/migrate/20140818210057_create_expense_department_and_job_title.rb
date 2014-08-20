@@ -1,26 +1,19 @@
 class CreateExpenseDepartmentAndJobTitle < ActiveRecord::Migration
   def up
     execute <<-eos
-      CREATE VIEW expense_department_and_job_titles
+      CREATE VIEW expense_job_title_assignments
       AS
         SELECT
           expenses.id as expense_id,
-          departments.name as department_name,
-          job_titles.name as job_title_name
+          job_title_assignments.id as job_title_assignment_id
         FROM expenses
-          INNER JOIN job_title_assignments jta
-            ON jta.user_id = expenses.user_id
-            AND expenses.date BETWEEN jta.starts_on AND jta.ends_on
-          INNER JOIN job_titles
-              ON jta.job_title_id = job_titles.id
-          INNER JOIN departments
-              ON jta.department_id = departments.id
+          INNER JOIN job_title_assignments
+            ON job_title_assignments.user_id = expenses.user_id
+            AND expenses.date BETWEEN job_title_assignments.starts_on AND job_title_assignments.ends_on
     eos
   end
 
   def down
-    execute <<-eos
-      DROP VIEW expense_department_and_job_titles
-    eos
+    execute "DROP VIEW expense_job_title_assignments"
   end
 end

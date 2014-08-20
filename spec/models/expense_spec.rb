@@ -3,7 +3,10 @@ require 'spec_helper'
 describe Expense do
   it { should belong_to(:user) }
   it { should belong_to(:category) }
-  it { should have_one(:expense_department_and_job_title) }
+  it { should have_one(:expense_job_title_assignment) }
+  it { should have_one(:job_title_assignment).through(:expense_job_title_assignment) }
+  it { should have_one(:job_title) }
+  it { should have_one(:department) }
 
   it { should validate_presence_of(:user) }
   it { should validate_presence_of(:date) }

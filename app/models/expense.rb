@@ -2,7 +2,10 @@ class Expense < ActiveRecord::Base
   STATUSES = %w(Pending Approved Rejected)
   belongs_to :user
   belongs_to :category
-  has_one :expense_department_and_job_title
+  has_one :expense_job_title_assignment
+  has_one :job_title_assignment, through: :expense_job_title_assignment, class_name: JobTitleAssignment
+  has_one :job_title, through: :job_title_assignment
+  has_one :department, through: :job_title_assignment
 
   validates :user, :date, :category, :description, :amount, presence: true
   validates :status, inclusion: { in: STATUSES, allow_blank: false }
