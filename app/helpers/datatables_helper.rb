@@ -9,11 +9,11 @@ module DatatablesHelper
   end
 
   def sort_direction
-    params[:sSortDir_0] == "desc" ? "desc" : "asc"
+    params[:sSortDir_0] == "desc" ? :desc : :asc
   end
 
   def sort_column
-    @columns[params[:iSortCol_0].to_i]
+    columns[params[:iSortCol_0].to_i]
   end
 
   def as_json(options={})

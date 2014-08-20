@@ -22,7 +22,16 @@ class Expense < ActiveRecord::Base
 
   searchable do
     integer :user_id
-    text :user_name, :department_name, :job_title_name, :date, :category_name, :description, :currency, :amount, :status
+    text    :user_name, :department_name, :job_title_name, :date, :category_name, :description, :currency, :amount, :status
+    string  :s_user_name       do user_name       end
+    string  :s_department_name do department_name end
+    string  :s_job_title_name  do job_title_name  end
+    date    :s_date            do date            end
+    string  :s_category_name   do category_name   end
+    string  :s_description     do description     end
+    string  :s_currency        do currency        end
+    double  :s_amount          do amount          end
+    string  :s_status          do status          end
   end
 
   def self.sum_in(currency)
