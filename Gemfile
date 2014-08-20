@@ -54,6 +54,7 @@ group :test do
   gem "shoulda-matchers", require: false
   gem "timecop"
   gem "webmock"
+  gem "sunspot_test"
 end
 
 group :staging, :production do

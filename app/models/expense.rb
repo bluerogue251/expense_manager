@@ -4,8 +4,6 @@ class Expense < ActiveRecord::Base
   belongs_to :category
   has_one :expense_job_title_assignment
   has_one :job_title_assignment, through: :expense_job_title_assignment, class_name: JobTitleAssignment
-  has_one :job_title, through: :job_title_assignment
-  has_one :department, through: :job_title_assignment
 
   validates :user, :date, :category, :description, :amount, presence: true
   validates :status, inclusion: { in: STATUSES, allow_blank: false }
@@ -13,7 +11,9 @@ class Expense < ActiveRecord::Base
 
   delegate :name, to: :category, prefix: true
   delegate :name, to: :user, prefix: true
-  delegate :department_name, :job_title_name, to: :expense_department_and_job_title, prefix: false, allow_nil: true
+  delegate :job_title, :department, to: :job_title_assignment, allow_nil: true
+  delegate :name, to: :department, prefix: true, allow_nil: true
+  delegate :name, to: :job_title, prefix: true, allow_nil: true
 
   scope :rejected,  -> { where(status: "Rejected") }
   scope :pending,   -> { where(status: "Pending") }

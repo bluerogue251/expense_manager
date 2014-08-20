@@ -6,6 +6,7 @@ require "rspec/rails"
 require "shoulda/matchers"
 require "webmock/rspec"
 require "clearance/rspec"
+require "sunspot_test/rspec"
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 
