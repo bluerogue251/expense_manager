@@ -2,6 +2,8 @@ Expense manager
 ===============
 
 [![Build Status](https://travis-ci.org/bluerogue251/expense_manager.svg?branch=master)](https://travis-ci.org/bluerogue251/expense_manager)
+[![Code Climate](https://codeclimate.com/github/bluerogue251/expense_manager/badges/gpa.svg)](https://codeclimate.com/github/bluerogue251/expense_manager)
+[![Test Coverage](https://codeclimate.com/github/bluerogue251/expense_manager/badges/coverage.svg)](https://codeclimate.com/github/bluerogue251/expense_manager)
 
 
 This is a Ruby-on-Rails application for tracking company expenses. Here are some interesting facts about it:
