@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   include Clearance::User
+  include ReindexExpensesAfterSave
+
   validates :name, :email, presence: true
   validates :default_currency, inclusion: { in: ExchangeRate::CURRENCIES }
 
@@ -8,4 +10,5 @@ class User < ActiveRecord::Base
   has_many :job_title_assignments
   has_many :job_titles, through: :job_title_assignments
   has_many :departments, through: :job_title_assignments
+
 end

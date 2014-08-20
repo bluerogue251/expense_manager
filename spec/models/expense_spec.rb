@@ -68,10 +68,6 @@ describe Expense do
       expense = Expense.new
       expect(expense.department_name).to be_nil
     end
-
-    it "is searchable" do
-      pending
-    end
   end
 
   describe "#job_title_name" do
@@ -86,10 +82,6 @@ describe Expense do
     it "Can be nil without throwing an error" do
       expense = Expense.new
       expect(expense.job_title_name).to be_nil
-    end
-
-    it "is searchable" do
-      pending
     end
   end
 end
