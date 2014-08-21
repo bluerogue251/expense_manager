@@ -9,13 +9,18 @@ module ReindexExpensesAfterSave
   private
 
   def reindex_expenses
-    Sunspot.index!(expenses.reload)
+    ids = expenses.pluck(:id)
+    reindex_in_background(ids)
   end
 
   def reindex_expenses_on_destroy
     ids = expenses.pluck(:id)
     yield
-    Sunspot.index!(Expense.where(id: ids))
+    reindex_in_background(ids)
+  end
+
+  def reindex_in_background(ids)
+    ExpenseReindexer.new(ids).delay.reindex
   end
 
 end
