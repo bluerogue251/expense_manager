@@ -28,6 +28,10 @@ body {
   @include span-columns(2);
 }
 
+.big {
+  @include span-columns(3);
+}
+
 .large {
   @include span-columns(4);
 }
@@ -157,4 +161,20 @@ header {
     margin-bottom: 10px;
     font-size: 150%;
   }
+}
+
+.left {
+  @include span-columns(3);
+
+  .button {
+    float: right;
+  }
+}
+
+.right {
+  @include span-columns(7);
+}
+
+form.edit_user fieldset {
+  padding: 5px;
 }
