@@ -35,7 +35,7 @@ feature "Expenses", js: true, search: true do
     expect(page).to have_selector ".error", text: "Date can't be blank"
   end
 
-  scenario "Editing and expense" do
+  scenario "Editing an expense" do
     user = create(:user)
     expense = create(:expense, user: user, description: "Old description")
     Sunspot.commit

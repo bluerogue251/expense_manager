@@ -4,6 +4,6 @@ var form = $("form");
 <% if @expense.errors.any? %>
   form.find(".errors").replaceWith("<%= j render "shared/errors", object: @expense %>");
 <% else %>
-  form[0].reset();
+  form.replaceWith("<%= j render "form", expense: Expense.new %>");
   table.DataTable().ajax.reload();
 <% end %>

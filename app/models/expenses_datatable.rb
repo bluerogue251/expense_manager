@@ -1,7 +1,7 @@
 class ExpensesDatatable
   include DatatablesHelper
+  delegate :params, :link_to, :fa_icon, :number_with_precision, to: :view_context
   attr_reader :view_context
-  delegate :params, :link_to, :fa_icon, to: :view_context
 
   def initialize(view_context, current_user_id)
     @view_context    = view_context
@@ -42,7 +42,7 @@ class ExpensesDatatable
         expense.category_name,
         expense.description,
         expense.currency,
-        expense.amount,
+        number_with_precision(expense.amount, precision: 2),
         expense.status,
         destroy_link(expense)
       ]

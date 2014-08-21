@@ -2,9 +2,7 @@ class ExpensesController < ApplicationController
 
   def index
     respond_to do |format|
-      format.html do
-        @expense = Expense.new
-      end
+      format.html
       format.json do
         render json: ExpensesDatatable.new(view_context, current_user.id)
       end
