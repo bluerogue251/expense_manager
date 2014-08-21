@@ -35,30 +35,39 @@ class ReviewExpensesDatatable
         expense.currency,
         number_with_precision(expense.amount, precision: 2),
         expense.status,
-        status_change_links(expense)
+        status_change_link_one(expense),
+        status_change_link_two(expense),
       ]
     end
   end
 
-  def status_change_links(expense)
-    "#{pend_link(expense)} #{reject_link(expense)} #{approve_link(expense)}"
+  def status_change_link_one(expense)
+    expense.rejected? ? pend_link(expense) : reject_link(expense)
+  end
+
+  def status_change_link_two(expense)
+    expense.approved? ? pend_link(expense) : approve_link(expense)
+  end
+
+  def status_change_link(expense, type, icon)
+    link_to fa_icon(icon, text: type),
+            [type, expense],
+            method: :patch,
+            remote: true,
+            id: "#{type}_expense_#{expense.id}",
+            class: "status-link #{type}",
+            data: { confirm: "#{type} expense?" }
   end
 
   def pend_link(expense)
-    unless expense.pending?
-      link_to fa_icon('step-backward', text: 'pend'), [:pend, expense], method: :patch, remote: true, id: "pend_expense_#{expense.id}", class: "status-link"
-    end
+    status_change_link(expense, :pend, "step-backward")
   end
 
   def reject_link(expense)
-    unless expense.rejected?
-      link_to fa_icon('times', text: 'reject'), [:reject, expense], method: :patch, remote: true, id: "reject_expense_#{expense.id}", class: "reject status-link"
-    end
+    status_change_link(expense, :reject, "times")
   end
 
   def approve_link(expense)
-    unless expense.approved?
-      link_to fa_icon('check', text: 'approve'), [:approve, expense], method: :patch, remote: true, id: "approve_expense_#{expense.id}", class: "approve status-link"
-    end
+    status_change_link(expense, :approve, "check")
   end
 end
