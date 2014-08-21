@@ -62,5 +62,22 @@ feature "Expenses", js: true, search: true do
     expect(page).to_not have_content description
     expect(Expense.exists?(expense)).to eq false
   end
+
+  scenario "Sorting expenses" do
+    user = create(:user)
+    a_desc = "aaa description"
+    z_desc = "zzz description"
+    10.times { create(:expense, user: user, description: a_desc) }
+    create(:expense, user: user, description: z_desc)
+    Sunspot.commit
+    visit expenses_path(as: user)
+    # First sort ascending
+    find("td", text: "Description").click
+    expect(page).to have_selector "td", text: a_desc, count: 10
+    # Now sort descending
+    find("td", text: "Description").click
+    expect(page).to have_selector "td", text: z_desc, count: 1
+    expect(page).to have_selector "td", text: a_desc, count: 9
+  end
 end
 

@@ -41,4 +41,21 @@ feature "Reviewing (approving/rejecting) Expenses", js: :true, search: true do
     # The expense is now pending, so the 'reject' link gets hidden
     expect(page).to_not have_link "pend"
   end
+
+  scenario "Sorting expenses" do
+    user = create(:user)
+    early_date = "1999-01-01"
+    late_date  = "2000-01-01"
+    10.times { create(:expense, user: user, date: early_date) }
+    create(:expense, user: user, date: late_date)
+    Sunspot.commit
+    visit expenses_path(as: user)
+    # First sort ascending
+    find("td", text: "Date").click
+    expect(page).to have_selector "td", text: early_date, count: 10
+    # Now sort descending
+    find("td", text: "Date").click
+    expect(page).to have_selector "td", text: late_date, count: 1
+    expect(page).to have_selector "td", text: early_date, count: 9
+  end
 end
