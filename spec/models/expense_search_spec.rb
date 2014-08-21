@@ -6,9 +6,11 @@ describe "Expense search", search: true do
     department = create(:department, name: "test department")
     expense = create(:expense, user:user)
     jta = create(:job_title_assignment, user: user, department: department)
+    Sunspot.commit
     results = Expense.search { fulltext "test department" }.results
     expect(results).to eq [expense]
     jta.destroy!
+    Sunspot.commit
     new_results = Expense.search { fulltext "test department" }.results
     expect(new_results).to eq []
   end
@@ -18,6 +20,7 @@ describe "Expense search", search: true do
     job_title = create(:job_title, name: "test job title")
     expense = create(:expense, user: user)
     create(:job_title_assignment, user: user, job_title: job_title)
+    Sunspot.commit
     results = Expense.search { fulltext "test job title" }.results
     expect(results).to eq [expense]
   end
@@ -26,6 +29,7 @@ describe "Expense search", search: true do
     user = create(:user, name: "old name")
     expense = create(:expense, user: user)
     user.update!(name: "new name")
+    Sunspot.commit
     results = Expense.search { fulltext "new" }.results
     expect(results).to eq [expense]
   end
@@ -36,6 +40,7 @@ describe "Expense search", search: true do
     create(:job_title_assignment, user: user, job_title: job_title)
     expense = create(:expense, user: user)
     job_title.update!(name: "new_test_job_title")
+    Sunspot.commit
     results = Expense.search { fulltext "new_test_job_title" }.results
     expect(results).to eq [expense]
   end
@@ -46,6 +51,7 @@ describe "Expense search", search: true do
     create(:job_title_assignment, user: user, department: department)
     expense = create(:expense, user: user)
     department.update!(name: "new_test_department")
+    Sunspot.commit
     results = Expense.search { fulltext "new_test_department" }.results
     expect(results).to eq [expense]
   end
