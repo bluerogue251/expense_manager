@@ -11,7 +11,7 @@ feature "Navigation" do
   scenario "Clicking the Expenses link navigates to the expense index page" do
     user = create(:user)
     visit root_path(as: user)
-    click_link "Expenses"
+    click_link "My expenses"
     expect(current_path).to eq expenses_path
   end
 
@@ -25,7 +25,7 @@ feature "Navigation" do
   scenario "Clicking the Review link navigates to the expense review page" do
     user = create(:user)
     visit root_path(as: user)
-    click_link "Review"
+    click_link "All expenses"
     expect(current_path).to eq review_expenses_path
   end
 end
