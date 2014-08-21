@@ -33,6 +33,7 @@ class Expense < ActiveRecord::Base
     double  :s_amount          do amount          end
     string  :s_status          do status          end
   end
+  handle_asynchronously :solr_index
 
   def self.sum_in(currency)
     joins_exchange_rates(currency)
