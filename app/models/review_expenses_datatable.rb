@@ -50,23 +50,24 @@ class ReviewExpensesDatatable
   end
 
   def status_change_link(expense, type, icon)
-    link_to fa_icon(icon, text: type), [type, expense],
-        method: :patch,
-        remote: true,
-        id: "#{type}_expense_#{expense.id}",
-        class: "status-link #{type}",
-        data: { confirm: "#{type} expense?" }
+    link_to fa_icon(icon, text: type),
+            [type, expense],
+            method: :patch,
+            remote: true,
+            id: "#{type}_expense_#{expense.id}",
+            class: "status-link #{type}",
+            data: { confirm: "#{type} expense?" }
   end
 
   def pend_link(expense)
-    status_change_link(expense, :pend, 'step-backward')
+    status_change_link(expense, :pend, "step-backward")
   end
 
   def reject_link(expense)
-    status_change_link(expense, :reject, 'times')
+    status_change_link(expense, :reject, "times")
   end
 
   def approve_link(expense)
-    status_change_link(expense, :approve, 'check')
+    status_change_link(expense, :approve, "check")
   end
 end
