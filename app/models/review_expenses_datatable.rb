@@ -6,18 +6,24 @@ class ReviewExpensesDatatable
   def initialize(view_context)
     @view_context    = view_context
     @display_records = get_records
-    # @columns = %w(id date category_id description currency amount status id)
   end
 
   private
+
+  def columns
+    %w(s_user_name s_department_name s_job_title_name s_date s_category_name s_description s_currency s_amount s_status s_user_name s_user_name)
+  end
 
   def total_record_count
     Expense.search.total
   end
 
   def get_records
+    c = sort_column
+    d = sort_direction
     Expense.search do
       fulltext params[:sSearch]
+      order_by(c, d)
       paginate page: page, per_page: per
     end
   end
