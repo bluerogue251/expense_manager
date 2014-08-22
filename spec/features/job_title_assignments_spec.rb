@@ -19,4 +19,15 @@ feature "Job title assignments" do
     expect(jta.starts_on).to  eq Date.parse("1979-01-10")
     expect(jta.ends_on).to    eq Date.parse("2009-12-14")
   end
+
+  scenario "Deleting", js: true do
+    user = create(:user)
+    jta = create(:job_title_assignment, user: user)
+    expect(user.job_title_assignments.count).to eq 1
+    visit edit_user_path(user, as: user)
+    first(:link, "destroy").click
+    click_button "Update User"
+    expect(page).to have_selector "#flash_success", text: "User profile updated"
+    expect(user.job_title_assignments.count).to eq 0
+  end
 end

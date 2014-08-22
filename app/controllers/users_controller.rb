@@ -24,6 +24,6 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name,
                                  :email,
                                  :default_currency,
-                                 job_title_assignments_attributes: [:id, :department_id, :job_title_id, :starts_on, :ends_on])
+                                 job_title_assignments_attributes: [:id, :department_id, :job_title_id, :starts_on, :ends_on, :_destroy])
   end
 end
