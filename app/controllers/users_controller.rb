@@ -16,6 +16,11 @@ class UsersController < ApplicationController
 
   private
 
+  rescue_from PG::CheckViolation do |exception|
+    flash[:error] = "User job title assignments have overlapping dates"
+    render :edit
+  end
+
   def find_user
     @user = User.find(params[:id])
   end
