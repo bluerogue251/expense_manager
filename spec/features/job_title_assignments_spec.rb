@@ -3,7 +3,7 @@ require "spec_helper"
 feature "Job title assignments" do
   scenario "Adding a new one" do
     department = create(:department)
-    job_title =  create(:job_title)
+    job_title = create(:job_title)
     user = create(:user)
     expect(user.job_title_assignments.count).to eq 0
     visit edit_user_path(user, as: user)
