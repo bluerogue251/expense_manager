@@ -1,0 +1,13 @@
+<%= simple_form_for @user do |f| %>
+  <div>
+    <%= f.input :name %>
+    <%= f.input :email %>
+    <%= f.input :default_currency, collection: ExchangeRate::CURRENCIES, required: true %>
+  </div>
+  <div>
+    <%= f.simple_fields_for :job_title_assignments do |jta_form| %>
+      <%= render "job_title_assignment_fields", jta_form: jta_form %>
+    <% end %>
+  </div>
+  <%= f.button :submit %>
+<% end %>

@@ -11,4 +11,6 @@ class User < ActiveRecord::Base
   has_many :job_titles, through: :job_title_assignments
   has_many :departments, through: :job_title_assignments
 
+  accepts_nested_attributes_for :job_title_assignments, reject_if: :all_blank, allow_destroy: true
+
 end
