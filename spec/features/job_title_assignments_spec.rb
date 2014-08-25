@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 feature "Job title assignments" do
   scenario "Adding a new one" do
@@ -8,9 +8,9 @@ feature "Job title assignments" do
     expect(user.job_title_assignments.count).to eq 0
     visit edit_user_path(user, as: user)
     select department.name, from: "Department"
-    select job_title.name,  from: "Job title"
-    fill_in "Starts on",    with: "1979-01-10"
-    fill_in "Ends on",      with: "2009-12-14"
+    select job_title.name, from: "Job title"
+    fill_in "Starts on", with: "1979-01-10"
+    fill_in "Ends on", with: "2009-12-14"
     click_on "Update User"
     expect(user.job_title_assignments.count).to eq 1
     jta = user.job_title_assignments.first
@@ -22,7 +22,7 @@ feature "Job title assignments" do
 
   scenario "Deleting", js: true do
     user = create(:user)
-    jta = create(:job_title_assignment, user: user)
+    create(:job_title_assignment, user: user)
     expect(user.job_title_assignments.count).to eq 1
     visit edit_user_path(user, as: user)
     first(:link, "destroy").click
@@ -44,8 +44,8 @@ feature "Job title assignments" do
 
   scenario "Updating with an overlapping date range" do
     user = create(:user)
-    first_jta  = create(:job_title_assignment, user: user, starts_on: "2000-01-01", ends_on: "2000-12-31")
-    second_jta = create(:job_title_assignment, user: user, starts_on: "2001-01-01", ends_on: "2001-01-01")
+    create(:job_title_assignment, user: user, starts_on: "2000-01-01", ends_on: "2000-12-31")
+    create(:job_title_assignment, user: user, starts_on: "2001-01-01", ends_on: "2001-01-01")
     visit edit_user_path(user, as: user)
     fill_in "user_job_title_assignments_attributes_0_starts_on", with: "2001-01-01"
     click_button "Update User"

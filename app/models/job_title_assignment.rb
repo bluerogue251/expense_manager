@@ -9,5 +9,4 @@ class JobTitleAssignment < ActiveRecord::Base
 
   delegate :name, to: :department, prefix: true, allow_nil: true
   delegate :name, to: :job_title, prefix: true, allow_nil: true
-
 end

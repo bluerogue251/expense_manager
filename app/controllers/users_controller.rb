@@ -16,7 +16,7 @@ class UsersController < ApplicationController
 
   private
 
-  rescue_from PG::CheckViolation do |exception|
+  rescue_from PG::CheckViolation do
     flash[:error] = "User job title assignments have overlapping dates"
     redirect_to edit_user_path(@user)
   end
@@ -29,6 +29,11 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name,
                                  :email,
                                  :default_currency,
-                                 job_title_assignments_attributes: [:id, :department_id, :job_title_id, :starts_on, :ends_on, :_destroy])
+                                 job_title_assignments_attributes: [:id,
+                                                                    :department_id,
+                                                                    :job_title_id,
+                                                                    :starts_on,
+                                                                    :ends_on,
+                                                                    :_destroy])
   end
 end

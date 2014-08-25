@@ -2,7 +2,10 @@ class AddDateRangeConstraintToJobTitleAssignments < ActiveRecord::Migration
   def up
     execute <<-eos
 
-      CREATE FUNCTION unique_job_title_assignment_date_range(record_id integer, new_user_id integer, new_start_date date, new_end_date date)
+      CREATE FUNCTION unique_job_title_assignment_date_range(record_id integer,
+                                                             new_user_id integer,
+                                                             new_start_date date,
+                                                             new_end_date date)
         RETURNS boolean AS $$
           BEGIN
             IF
@@ -30,10 +33,12 @@ class AddDateRangeConstraintToJobTitleAssignments < ActiveRecord::Migration
           END;
           $$ LANGUAGE plpgsql;
 
-
       alter table job_title_assignments
       add constraint unique_date_ranges
-      check (unique_job_title_assignment_date_range(id, user_id, starts_on, ends_on));
+      check (unique_job_title_assignment_date_range(id,
+                                                    user_id,
+                                                    starts_on,
+                                                    ends_on));
 
     eos
   end
