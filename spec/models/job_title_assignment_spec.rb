@@ -22,5 +22,13 @@ describe JobTitleAssignment do
         create(:job_title_assignment, user: user, starts_on: "1998-10-30", ends_on: "1999-10-30")
       }.to raise_error ActiveRecord::StatementInvalid
     end
+
+    it "Permits updating (bug regression test)" do
+      user = create(:user)
+      job_title_assignment = create(:job_title_assignment, user: user, starts_on: "1999-10-15", ends_on: "2000-10-15")
+      job_title_assignment.update!(starts_on: "1999-10-14")
+      # No error is thrown and the record is actually updated correctly:
+      expect(job_title_assignment.reload.starts_on).to eq Date.parse("1999-10-14")
+    end
   end
 end

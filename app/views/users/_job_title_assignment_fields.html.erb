@@ -1,0 +1,10 @@
+<fieldset>
+  <%= jta_form.input :department_id, collection: Department.all, wrapper_html: { class: "medium" } %>
+  <%= jta_form.input :job_title_id, collection: JobTitle.all, wrapper_html: { class: "medium" } %>
+  <%= jta_form.input :starts_on, as: :string, input_html: { class: "datepicker" }, wrapper_html: { class: "medium" } %>
+  <%= jta_form.input :ends_on, as: :string,   input_html: { class: "datepicker" }, wrapper_html: { class: "medium" } %>
+  <div class="input mini">
+    <%= link_to fa_icon('times', text: "destroy"), '#', class: "destroy destroy_jta prevent-default" %>
+    <%= jta_form.hidden_field :_destroy %>
+  </div>
+</fieldset>

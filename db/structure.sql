@@ -26,10 +26,10 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 SET search_path = public, pg_catalog;
 
 --
--- Name: unique_job_title_assignment_date_range(integer, date, date); Type: FUNCTION; Schema: public; Owner: -
+-- Name: unique_job_title_assignment_date_range(integer, integer, date, date); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION unique_job_title_assignment_date_range(new_user_id integer, new_start_date date, new_end_date date) RETURNS boolean
+CREATE FUNCTION unique_job_title_assignment_date_range(record_id integer, new_user_id integer, new_start_date date, new_end_date date) RETURNS boolean
     LANGUAGE plpgsql
     AS $$
           BEGIN
@@ -37,6 +37,7 @@ CREATE FUNCTION unique_job_title_assignment_date_range(new_user_id integer, new_
                (
                  SELECT 1 FROM job_title_assignments
                  WHERE user_id = new_user_id
+                 AND record_id != id
                  AND new_start_date BETWEEN starts_on AND ends_on
                  LIMIT 1
                ) IS NULL
@@ -44,8 +45,9 @@ CREATE FUNCTION unique_job_title_assignment_date_range(new_user_id integer, new_
                AND
 
                (
-                 select 1 from job_title_assignments
-                 where user_id = new_user_id
+                 SELECT 1 FROM job_title_assignments
+                 WHERE user_id = new_user_id
+                 AND record_id != id
                  AND new_end_date BETWEEN starts_on AND ends_on
                  LIMIT 1
                ) IS NULL THEN
@@ -228,7 +230,7 @@ CREATE TABLE job_title_assignments (
     updated_at timestamp without time zone NOT NULL,
     starts_on date NOT NULL,
     ends_on date NOT NULL,
-    CONSTRAINT unique_date_ranges CHECK (unique_job_title_assignment_date_range(user_id, starts_on, ends_on))
+    CONSTRAINT unique_date_ranges CHECK (unique_job_title_assignment_date_range(id, user_id, starts_on, ends_on))
 );
 
 
