@@ -17,6 +17,11 @@ class ExchangeRatesController < ApplicationController
 
   private
 
+  rescue_from PG::CheckViolation do
+    @exchange_rate.errors.add(:base, "Exchange rates must not have overlapping dates")
+    render "create_or_update"
+  end
+
   def find_exchange_rate
     @exchange_rate = ExchangeRate.find(params[:id])
   end

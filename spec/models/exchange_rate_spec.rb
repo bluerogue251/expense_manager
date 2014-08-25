@@ -22,4 +22,13 @@ describe ExchangeRate do
       expect(ExchangeRate.by_starts_on).to eq [earliest, middle, latest]
     end
   end
+
+  describe "Database-level constraint on overlapping date ranges" do
+    it "Prevents two exchange rates with the same currencies from having overlapping date ranges" do
+      create(:exchange_rate, anchor: "USD", float: "CNY", starts_on: "2001-01-01", ends_on: "2001-01-10")
+      expect {
+        create(:exchange_rate, anchor: "USD", float: "CNY", starts_on: "2001-01-02", ends_on: "2000-01-11")
+      }.to raise_error ActiveRecord::StatementInvalid
+    end
+  end
 end

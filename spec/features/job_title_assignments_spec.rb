@@ -45,9 +45,10 @@ feature "Job title assignments" do
   scenario "Updating with an overlapping date range" do
     user = create(:user)
     create(:job_title_assignment, user: user, starts_on: "2000-01-01", ends_on: "2000-12-31")
-    create(:job_title_assignment, user: user, starts_on: "2001-01-01", ends_on: "2001-01-01")
+    create(:job_title_assignment, user: user, starts_on: "2001-01-01", ends_on: "2001-12-31")
     visit edit_user_path(user, as: user)
-    fill_in "user_job_title_assignments_attributes_0_starts_on", with: "2001-01-01"
+    fill_in "user_job_title_assignments_attributes_0_starts_on", with: "2001-01-02"
+    fill_in "user_job_title_assignments_attributes_0_ends_on", with: "2002-01-01"
     click_button "Update User"
     expect(page).to have_selector "#flash_error", text: "User job title assignments have overlapping dates"
   end

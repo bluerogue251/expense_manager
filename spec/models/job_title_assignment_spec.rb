@@ -6,6 +6,12 @@ describe JobTitleAssignment do
   it { should belong_to(:department) }
   it { should have_many(:expenses) }
 
+  specify "starts_on must be before or equal to ends_on" do
+    job_title_assignment = JobTitleAssignment.new(starts_on: Time.zone.tomorrow, ends_on: Time.zone.yesterday)
+    expect(job_title_assignment).to_not be_valid
+    expect(job_title_assignment.errors.full_messages).to include "Starts on must be before or on ends on date"
+  end
+
   describe "Database-level validation of starts_on and ends_on", js: true do
     it "Does not permit a user to have a start date that overlaps an existing range" do
       user = create(:user)
@@ -27,7 +33,7 @@ describe JobTitleAssignment do
       user = create(:user)
       job_title_assignment = create(:job_title_assignment, user: user, starts_on: "1999-10-15", ends_on: "2000-10-15")
       job_title_assignment.update!(starts_on: "1999-10-14")
-      # No error is thrown and the record is actually updated correctly:
+      # No error is thrown and the record is updated correctly:
       expect(job_title_assignment.reload.starts_on).to eq Date.parse("1999-10-14")
     end
   end

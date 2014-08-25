@@ -21,6 +21,17 @@ feature "Exchange Rates", js: true do
     expect(ExchangeRate.count).to eq 0
   end
 
+  scenario "Creating with overlapping date ranges" do
+    ex_rate = create(:exchange_rate, anchor: "HKD", float: "CNY", starts_on: "1970-10-10", ends_on: "1980-10-10")
+    user = create(:user)
+    visit exchange_rates_path(as: user)
+    expect(ExchangeRate.count).to eq 1
+    fast_fill_form(:exchange_rate, anchor: "HKD", float: "CNY", rate: "1", starts_on: "1970-11-01", ends_on: "2011-02-01")
+    click_button "Create Exchange rate"
+    expect(page).to have_selector ".error", text: "Exchange rates must not have overlapping dates"
+    expect(ExchangeRate.count).to eq 1
+  end
+
   scenario "Destroying" do
     user = create(:user)
     ex_rate = create(:exchange_rate)
