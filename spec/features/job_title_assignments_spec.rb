@@ -39,7 +39,7 @@ feature "Job title assignments" do
     select new_department.name, from: "user_job_title_assignments_attributes_0_department_id"
     click_button "Update User"
     expect(page).to have_selector "#flash_success", text: "User profile updated"
-    expect(jta.department).to eq new_department
+    expect(jta.reload.department).to eq new_department
   end
 
   scenario "Updating with an overlapping date range" do

@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 
   rescue_from PG::CheckViolation do |exception|
     flash[:error] = "User job title assignments have overlapping dates"
-    render :edit
+    redirect_to edit_user_path(@user)
   end
 
   def find_user

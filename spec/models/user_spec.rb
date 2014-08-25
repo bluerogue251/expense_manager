@@ -9,4 +9,5 @@ describe User do
   it { should have_many(:job_titles).through(:job_title_assignments) }
   it { should have_many(:departments).through(:job_title_assignments) }
   it { should have_many(:expenses) }
+
 end
