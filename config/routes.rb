@@ -7,4 +7,5 @@ Rails.application.routes.draw do
     member { patch :approve, :reject, :pend }
   end
   resources :users, only: [:edit, :update]
+  resources :exchange_rates, except: [:new, :show]
 end

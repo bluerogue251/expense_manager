@@ -13,4 +13,13 @@ describe ExchangeRate do
     expect(rate).to_not be_valid
     expect(rate.errors.full_messages).to include "Anchor and float currencies cannot be the same"
   end
+
+  describe "self#by_starts_on" do
+    it "Orders the records by starts_on date, ascending" do
+      middle   = create(:exchange_rate, starts_on: "1997-01-01", ends_on: "1997-01-02")
+      earliest = create(:exchange_rate, starts_on: "1996-01-01", ends_on: "1996-01-02")
+      latest   = create(:exchange_rate, starts_on: "1998-01-01", ends_on: "1998-01-02")
+      expect(ExchangeRate.by_starts_on).to eq [earliest, middle, latest]
+    end
+  end
 end

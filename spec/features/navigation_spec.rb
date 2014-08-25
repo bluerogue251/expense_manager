@@ -28,4 +28,11 @@ feature "Navigation" do
     click_link "All expenses"
     expect(current_path).to eq review_expenses_path
   end
+
+  scenario "Clicking the Exchange Rates link navigates to the exchange rates page" do
+    user = create(:user)
+    visit root_path(as: user)
+    click_link "Exchange rates"
+    expect(current_path).to eq exchange_rates_path
+  end
 end
