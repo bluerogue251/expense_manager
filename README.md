@@ -7,16 +7,16 @@ Expense manager
 
 This is a Ruby-on-Rails application for tracking company expenses. The code is open source on [Github](https://github.com/bluerogue251/expense_manager), and there is a live demo on [Heroku](http://shielded-falls-2406.herokuapp.com/). Here are some interesting facts about it:
 
+## The facade pattern
+This app has a dashboard where several pieces of loosely related data are shown to the user all at once. Instead of reaching into and across many different models from the controller or view layer, I created a [new object called `Dashboard`](https://github.com/bluerogue251/expense_manager/blob/master/app/models/dashboard.rb). `Dashboard` is a single interface to all the data that is needed for the view. It is an example of the [Facade Pattern](http://en.wikipedia.org/wiki/Facade_pattern), because it is a simple way to access an API without the [controller or view](https://github.com/bluerogue251/expense_manager/blob/master/app/controllers/dashboard_controller.rb) needing to understand the API's implementation details.
 
 ## Scalable spreadsheet-like searching and sorting
-This app integrates [DataTables](http://www.datatables.net) on the client-side with [Sunspot](https://github.com/sunspot/sunspot) on the server-side to let users search and sort large amounts of data with online "spreadsheets". The demo app currently has over 200,000 records, yet searching and sorting is still lightning-fast.
+This app integrates [DataTables](http://www.datatables.net) on the client-side with [Sunspot](https://github.com/sunspot/sunspot) on the server-side to let users search and sort large amounts of data with online "spreadsheets". The demo app currently has over 200,000 records, yet searching and sorting is still extremely fast.
 
-I found Sunspot to be easier to set up than the other potential solution, materialized views and Postgres full text search.
+Using Sunspot (or Elasticsearch, which is comparable) have several advantages over the other popular solution, Postgres full text search. First, most searches are over denormalized data. Unless you build a denormalized [materialized view](http://bluerogue251.wordpress.com/2014/03/23/354/), it can be difficult to use indexes to ensure maximum search speed in Postgres. Second, the Sunspot API is in Ruby, and is overall easier and faster to learn. Using Sunspot, you can get started without understanding the details of things like Postgres tsvectors, gin indexes, etc.
 
-## Thoughtbot-oriented programming
-I learned about and used as many of [Thoughtbot's](http://thoughtbot.com/) open source tools as I could for this app. I started from scratch by running their [laptop script](https://github.com/thoughtbot/laptop) on a brand new unix user, used [suspenders](https://github.com/thoughtbot/suspenders), and stuck with most of their default gems.
+Sunspot does require that an additional worker process run alongside your application, but for many cases, it is still a simpler and more performant solution than Postgres full text search.
 
-Thoughtbot is a great Rails product shop, so this was a chance to broaden my horizons and improve my own code and workflow by following their example.
 
 ## Time-interval-based SQL joins
 Rails is great at joining records that are related by integer foreign keys. But sometimes, other kinds of joins are necessary for a DRY, normalized database design.
