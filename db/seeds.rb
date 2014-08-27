@@ -44,3 +44,22 @@ job_title_names = [
   "CTO"
 ]
 job_title_names.each { |job_title_name| JobTitle.create(name: job_title_name) }
+
+
+exchange_rates = [
+  ["USD", "CNY", 6.10, "1900-01-01", "2015-01-01"],
+  ["CNY", "USD", 0.16, "1900-01-01", "2015-01-01"],
+  ["CNY", "HKD", 1.26, "1900-01-01", "2015-01-01"],
+  ["HKD", "CNY", 0.79, "1900-01-01", "2015-01-01"],
+  ["HKD", "USD", 0.13, "1900-01-01", "2015-01-01"],
+  ["USD", "HKD", 7.75, "1900-01-01", "2015-01-01"],
+  ["HKD", "CAD", 0.14, "1900-01-01", "2015-01-01"],
+  ["CAD", "HKD", 7.12, "1900-01-01", "2015-01-01"],
+  ["USD", "CAD", 1.09, "1900-01-01", "2015-01-01"],
+  ["CAD", "USD", 0.92, "1900-01-01", "2015-01-01"]
+]
+
+exchange_rates.each do |anchor, float, rate, starts_on, ends_on|
+  ExchangeRate.create!(anchor: anchor, float: float, rate: rate, starts_on: starts_on, ends_on: ends_on)
+end
+
