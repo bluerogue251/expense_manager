@@ -26,6 +26,27 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 SET search_path = public, pg_catalog;
 
 --
+-- Name: unique_exchange_rate_date_range(integer, text, text, date, date); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION unique_exchange_rate_date_range(record_id integer, new_anchor text, new_float text, new_start_date date, new_end_date date) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$
+          BEGIN
+            IF (SELECT count(*) FROM exchange_rates
+                WHERE new_anchor = anchor
+                AND new_float = float
+                AND record_id != id
+                AND daterange(new_start_date, new_end_date) && daterange(starts_on, ends_on)
+               ) = 0 THEN RETURN TRUE;
+            ELSE
+              RETURN FALSE;
+            END IF;
+          END;
+          $$;
+
+
+--
 -- Name: unique_job_title_assignment_date_range(integer, integer, date, date); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -33,24 +54,11 @@ CREATE FUNCTION unique_job_title_assignment_date_range(record_id integer, new_us
     LANGUAGE plpgsql
     AS $$
           BEGIN
-            IF
-               (
-                 SELECT 1 FROM job_title_assignments
+            IF ( SELECT count(*) FROM job_title_assignments
                  WHERE user_id = new_user_id
                  AND record_id != id
-                 AND new_start_date BETWEEN starts_on AND ends_on
-                 LIMIT 1
-               ) IS NULL
-
-               AND
-
-               (
-                 SELECT 1 FROM job_title_assignments
-                 WHERE user_id = new_user_id
-                 AND record_id != id
-                 AND new_end_date BETWEEN starts_on AND ends_on
-                 LIMIT 1
-               ) IS NULL THEN
+                 AND daterange(new_start_date, new_end_date) && daterange(starts_on, ends_on)
+               ) = 0 THEN
               RETURN TRUE;
             ELSE
               RETURN FALSE;
@@ -176,7 +184,8 @@ CREATE TABLE exchange_rates (
     starts_on date NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    ends_on date NOT NULL
+    ends_on date NOT NULL,
+    CONSTRAINT unique_date_ranges CHECK (unique_exchange_rate_date_range(id, (anchor)::text, ("float")::text, starts_on, ends_on))
 );
 
 
@@ -561,4 +570,6 @@ INSERT INTO schema_migrations (version) VALUES ('20140809051801');
 INSERT INTO schema_migrations (version) VALUES ('20140814175250');
 
 INSERT INTO schema_migrations (version) VALUES ('20140818210057');
+
+INSERT INTO schema_migrations (version) VALUES ('20140825191732');
 

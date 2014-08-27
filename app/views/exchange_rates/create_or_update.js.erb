@@ -1,0 +1,9 @@
+var table = $("table#exchange_rates");
+var form = $("form");
+
+<% if @exchange_rate.errors.any? %>
+  form.find(".errors").replaceWith("<%= j render "shared/errors", object: @exchange_rate %>");
+<% else %>
+  form.replaceWith("<%= j render "form", exchange_rate: ExchangeRate.new %>");
+  table.append("<%= j render @exchange_rate %>");
+<% end %>

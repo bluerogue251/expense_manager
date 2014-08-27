@@ -8,24 +8,11 @@ class AddDateRangeConstraintToJobTitleAssignments < ActiveRecord::Migration
                                                              new_end_date date)
         RETURNS boolean AS $$
           BEGIN
-            IF
-               (
-                 SELECT 1 FROM job_title_assignments
+            IF ( SELECT count(*) FROM job_title_assignments
                  WHERE user_id = new_user_id
                  AND record_id != id
-                 AND new_start_date BETWEEN starts_on AND ends_on
-                 LIMIT 1
-               ) IS NULL
-
-               AND
-
-               (
-                 SELECT 1 FROM job_title_assignments
-                 WHERE user_id = new_user_id
-                 AND record_id != id
-                 AND new_end_date BETWEEN starts_on AND ends_on
-                 LIMIT 1
-               ) IS NULL THEN
+                 AND daterange(new_start_date, new_end_date) && daterange(starts_on, ends_on)
+               ) = 0 THEN
               RETURN TRUE;
             ELSE
               RETURN FALSE;

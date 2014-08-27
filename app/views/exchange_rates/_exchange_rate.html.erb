@@ -1,0 +1,8 @@
+<%= content_tag_for :tr, exchange_rate do %>
+  <td><%= exchange_rate.anchor %></td>
+  <td><%= exchange_rate.float %></td>
+  <td><%= exchange_rate.rate %></td>
+  <td><%= exchange_rate.starts_on %></td>
+  <td><%= exchange_rate.ends_on %></td>
+  <td><%= link_to fa_icon("times", text: "destroy"), exchange_rate, method: :delete, class: "destroy", remote: true, id: "destroy_exchange_rate_#{exchange_rate.id}", data: { confirm: "Destroy exchange rate?" } %></td>
+<% end %>
