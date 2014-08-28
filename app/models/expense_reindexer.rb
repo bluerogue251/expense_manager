@@ -5,9 +5,13 @@ class ExpenseReindexer
   end
 
   def reindex
-    Expense.where(id: @expense_ids).each do |expense|
-      expense.index
-    end
+    Sunspot.index(expenses)
+  end
+
+  private
+
+  def expenses
+    Expense.where(id: @expense_ids)
   end
 
 end
