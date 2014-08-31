@@ -9,18 +9,21 @@ module ReindexExpensesAfterSave
   private
 
   def reindex_expenses
-    ids = expenses.pluck(:id)
-    reindex_in_background(ids)
+    reindex_in_background(pluck_expense_ids)
   end
 
   def reindex_expenses_on_destroy
-    ids = expenses.pluck(:id)
+    ids = pluck_expense_ids
     yield
     reindex_in_background(ids)
   end
 
   def reindex_in_background(ids)
     ExpenseReindexer.new(ids).delay.reindex
+  end
+
+  def pluck_expense_ids
+    expenses.pluck(:id)
   end
 
 end

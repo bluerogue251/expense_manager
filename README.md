@@ -3,9 +3,9 @@ Expense manager
 
 [![Build Status](https://travis-ci.org/bluerogue251/expense_manager.svg?branch=master)](https://travis-ci.org/bluerogue251/expense_manager)
 [![Code Climate](https://codeclimate.com/github/bluerogue251/expense_manager/badges/gpa.svg)](https://codeclimate.com/github/bluerogue251/expense_manager)
-[![Test Coverage](https://codeclimate.com/github/bluerogue251/expense_manager/badges/coverage.svg)](https://codeclimate.com/github/bluerogue251/expense_manager)
+[![Coverage Status](https://coveralls.io/repos/bluerogue251/expense_manager/badge.png)](https://coveralls.io/r/bluerogue251/expense_manager)
 
-This is a Ruby-on-Rails application for tracking company expenses. The code is open source on [Github](https://github.com/bluerogue251/expense_manager), and there is a live demo on [Heroku](http://shielded-falls-2406.herokuapp.com/). Here are some interesting aspects:
+This is a Ruby-on-Rails application for tracking company expenses. The code is open source on [GitHub](https://github.com/bluerogue251/expense_manager), and there is a live demo on [Heroku](http://expensemanager.teddywidom.com). Here are some interesting aspects:
 
 ## The facade pattern
 The dashboard shows users several pieces of loosely related data together. Instead of reaching across many different models from the controller or view, I created [a new object](https://github.com/bluerogue251/expense_manager/blob/master/app/models/dashboard.rb) to serve as a single interface (or "Facade") to all the data that is displayed in the view. This makes it possible to access data from a complex API while keeping the [controller simple](https://github.com/bluerogue251/expense_manager/blob/master/app/controllers/dashboard_controller.rb) and the logic [easy to test](https://github.com/bluerogue251/expense_manager/blob/master/spec/models/dashboard_spec.rb).
@@ -20,7 +20,7 @@ Rails is great at joining records by integer foreign keys. But sometimes, other 
 
 When displaying sums of expenses converted into a single currency, [the `Expense` model](https://github.com/bluerogue251/expense_manager/blob/master/app/models/expense.rb) joins expenses to exchange rates through a combination of currencies and date ranges, rather than through an integer id. See `self.sum_in(currency)` and `self.joins_exchange_rates(currency)`.
 
-To ensure each expense is joined to exactly one exchange rate, I use [Postgres check constraints](https://github.com/bluerogue251/expense_manager/blob/master/db/migrate/20140825191732_add_exchange_rate_date_range_constraint.rb) with `daterange` data types and the "`&&`" overlap operator to prevent records with overlapping currencies and date ranges from being created. Since financial data is at stake, I wrote this validation in the database rather than in ActiveRecord, so that it cannot be easily bypassed.
+To ensure each expense is joined to exactly one exchange rate, I used [Postgres check constraints](https://github.com/bluerogue251/expense_manager/blob/master/db/migrate/20140825191732_add_exchange_rate_date_range_constraint.rb) with `daterange` data types and the "`&&`" overlap operator to prevent records with overlapping currencies and date ranges from being created. Since financial data is at stake, I wrote this validation in the database rather than in ActiveRecord, so that it cannot be easily bypassed.
 
 Getting started
 ---------------
