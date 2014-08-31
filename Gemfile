@@ -57,6 +57,7 @@ group :test do
   gem "timecop"
   gem "webmock"
   gem "sunspot_test"
+  gem "coveralls", require: false
 end
 
 group :staging, :production do
