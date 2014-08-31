@@ -1,14 +1,14 @@
 ENV["RAILS_ENV"] = "test"
 
 require File.expand_path("../../config/environment", __FILE__)
+require 'coveralls'
+Coveralls.wear!('rails')
 
 require "rspec/rails"
 require "shoulda/matchers"
 require "webmock/rspec"
 require "clearance/rspec"
 require "sunspot_test/rspec"
-require 'coveralls'
-Coveralls.wear!
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |file| require file }
 
