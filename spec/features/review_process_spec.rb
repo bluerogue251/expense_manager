@@ -7,8 +7,8 @@ feature "Reviewing (approving/rejecting) Expenses", js: :true, search: true do
     expense = create(:expense, status: "Pending")
     Sunspot.commit
     visit review_expenses_path(as: user)
-    expect(page).to have_selector "td", text: "Pending"
     sleep 1
+    expect(page).to have_selector "td", text: "Pending"
     click_link "approve"
     Sunspot.commit
     expect(page).to have_selector "td", text: "Approved"
