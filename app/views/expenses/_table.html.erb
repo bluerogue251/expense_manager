@@ -1,13 +1,16 @@
-<table id="expenses" class="datatable hover" data-source="<%= expenses_url(format: :json)%>">
+<table id="expenses" class="datatable hover" data-source="<%= review_expenses_path(format: :json) %>">
   <thead>
     <tr>
-      <td></td>
+      <td>User</td>
+      <td>Department</td>
+      <td>Job title</td>
       <td>Date</td>
       <td>Category</td>
       <td>Description</td>
       <td>Currency</td>
       <td>Amount</td>
       <td>Status</td>
+      <td></td>
       <td></td>
     </tr>
   </thead>

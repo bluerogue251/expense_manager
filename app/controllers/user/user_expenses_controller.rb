@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class User::ExpensesController < ApplicationController
   def edit
     find_user
     @user.job_title_assignments.build
