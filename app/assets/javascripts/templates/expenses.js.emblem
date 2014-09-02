@@ -14,7 +14,7 @@ table#expenses.hover
       tr
         td
         td = expense.date
-        td = expense.description
+        td = expense.category.name
         td = expense.description
         td = expense.currency
         td = expense.amount

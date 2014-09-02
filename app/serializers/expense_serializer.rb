@@ -1,3 +1,7 @@
 class ExpenseSerializer < ActiveModel::Serializer
-  attributes :id, :user_name, :department_name, :job_title_name, :date, :category_name, :description, :currency, :amount, :status
+  embed :ids, include: true
+
+  attributes :id, :category_id, :date, :description, :currency, :amount, :status
+
+  has_one :category
 end
