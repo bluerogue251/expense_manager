@@ -6,7 +6,7 @@ feature "Reviewing (approving/rejecting) Expenses", js: :true, search: true do
   scenario "Approving an expense" do
     expense = create(:expense, status: "Pending")
     Sunspot.commit
-    visit review_expenses_path(as: user)
+    visit expenses_path(as: user)
     sleep 1
     expect(page).to have_selector "td", text: "Pending"
     click_link "approve"
@@ -20,7 +20,7 @@ feature "Reviewing (approving/rejecting) Expenses", js: :true, search: true do
   scenario "Rejecting an expense" do
     expense = create(:expense, status: "Pending")
     Sunspot.commit
-    visit review_expenses_path(as: user)
+    visit expenses_path(as: user)
     sleep 1
     expect(page).to have_selector "td", text: "Pending"
     click_link "reject"
@@ -34,7 +34,7 @@ feature "Reviewing (approving/rejecting) Expenses", js: :true, search: true do
   scenario "Resetting an expense to Pending" do
     expense = create(:expense, status: "Rejected")
     Sunspot.commit
-    visit review_expenses_path(as: user)
+    visit expenses_path(as: user)
     sleep 1
     expect(page).to have_selector "td", text: "Rejected"
     click_link "pend"

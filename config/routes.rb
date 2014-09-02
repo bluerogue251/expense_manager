@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   get   "/dashboard/readme", to: "dashboard#readme", as: "readme"
 
   resources :expenses, only: :index do
-    collection { get :review }
     member { patch :approve, :reject, :pend }
   end
 

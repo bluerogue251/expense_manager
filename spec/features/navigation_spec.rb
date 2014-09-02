@@ -12,7 +12,7 @@ feature "Navigation" do
     user = create(:user)
     visit root_path(as: user)
     click_link "My expenses"
-    expect(current_path).to eq users_expenses_path
+    expect(current_path).to eq user_expenses_path
   end
 
   scenario "Clicking the Profile link navigates to the profile page" do

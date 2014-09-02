@@ -1,4 +1,4 @@
-<%= simple_form_for [current_user, expense], remote: true do |f| %>
+<%= simple_form_for expense, url: [:user, expense], remote: true do |f| %>
   <%= render "shared/errors", object: f.object %>
   <%= f.input :date, as: :string, wrapper_html: { class: "medium" }, input_html: { class: "datepicker" } %>
   <%= f.association :category, wrapper_html: { class: "medium" } %>

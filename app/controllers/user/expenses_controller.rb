@@ -10,7 +10,7 @@ class User::ExpensesController < ApplicationController
   end
 
   def create
-    @expense = current_user.expenses.create(expense_params)
+    @expense = scope.create(expense_params)
     render "create_or_update"
   end
 
@@ -32,7 +32,11 @@ class User::ExpensesController < ApplicationController
   private
 
   def find_expense
-    @expense = current_user.expenses.find(params[:id])
+    @expense = scope.find(params[:id])
+  end
+
+  def scope
+    current_user.expenses
   end
 
   def expense_params
