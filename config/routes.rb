@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'dashboard#readme'
+  root "dashboard#readme"
   patch "/dashboard/change_month/:month", to: "dashboard#change_month", as: "change_dashboard_month"
   get "/dashboard", to: "dashboard#show"
 
