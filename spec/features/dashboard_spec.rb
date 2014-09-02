@@ -1,45 +1,45 @@
 require "spec_helper"
 
 feature "Dashboard" do
-  scenario "Navigating to the Read me page" do
+  scenario "Navigating to the Dashboard show page" do
     user = create(:user)
     visit root_path(as: user)
-    click_link "Read me"
-    expect(current_path).to eq readme_path
-    expect(page).to have_selector "h1", text: "Expense manager"
+    click_link "Dashboard"
+    expect(current_path).to eq dashboard_path
+    expect(page).to have_selector "h1", text: "Expenses dashboard"
   end
 
-  scenario "Navigating to the root path takes you to the Dashboard show page" do
+  scenario "Navigating to the root path takes you to the Readme page" do
     user = create(:user)
     visit root_path(as: user)
-    expect(page).to have_selector "h1", text: "Expenses dashboard"
+    expect(page).to have_selector "h2", text: "The facade pattern"
   end
 
   scenario "For Rejected expenses, it displays total count" do
     user = create(:user)
     create(:expense, user: user, status: "Rejected")
-    visit root_path(as: user)
+    visit dashboard_path(as: user)
     expect(page).to have_selector "#rejected-card li.count", text: "1 Expense"
   end
 
   scenario "For Rejected expenses, it displays total amount in the User's default_currency" do
     user = create(:user, default_currency: "CNY")
     create(:expense, currency: "CNY", amount: 1, user: user, status: "Rejected")
-    visit root_path(as: user)
+    visit dashboard_path(as: user)
     expect(page).to have_selector "#rejected-card li.total", text: "1.00 CNY"
   end
 
   scenario "For Pending expenses, it displays total count" do
     user = create(:user)
     create(:expense, user: user, status: "Pending")
-    visit root_path(as: user)
+    visit dashboard_path(as: user)
     expect(page).to have_selector "#pending-card li.count", text: "1 Expense"
   end
 
   scenario "For Pending expenses, it displays total amount in the User's default_currency" do
     user = create(:user, default_currency: "CNY")
     create(:expense, currency: "CNY", amount: 1, user: user, status: "Pending")
-    visit root_path(as: user)
+    visit dashboard_path(as: user)
     expect(page).to have_selector "#pending-card li.total", text: "1.00 CNY"
   end
 
@@ -47,7 +47,7 @@ feature "Dashboard" do
     user = create(:user, default_currency: "CNY")
     create(:expense, user: user, currency: "CNY", status: "Approved", amount: 1, date: "2011-01-01")
     Timecop.travel("2011-02-01") do
-      visit root_path(as: user)
+      visit dashboard_path(as: user)
       expect(page).to have_selector "#approved-card li.due", text: "1.00 CNY (2011-01)"
     end
   end
@@ -58,7 +58,7 @@ feature "Dashboard" do
     create(:expense, user: user, currency: "USD", status: "Approved", amount: 3, date: "2011-03-01")
     create(:expense, user: user, currency: "USD", status: "Approved", amount: 2, date: "2011-02-01")
     Timecop.travel("2011-04-01") do
-      visit root_path(as: user)
+      visit dashboard_path(as: user)
       expect(page).to have_selector "#approved-card li.due", text: "3.00 USD (2011-03)"
       click_link "previous-month"
       expect(page).to have_selector "#approved-card li.due", text: "2.00 USD (2011-02)"
@@ -71,7 +71,7 @@ feature "Dashboard" do
     create(:expense, user: user, currency: "USD", status: "Approved", amount: 2, date: "2011-02-01")
     create(:expense, user: user, currency: "USD", status: "Approved", amount: 3, date: "2011-03-01")
     Timecop.travel("2011-03-01") do
-      visit root_path(as: user)
+      visit dashboard_path(as: user)
       expect(page).to have_selector "#approved-card li.due", text: "2.00 USD (2011-02)"
       click_link "next-month"
       expect(page).to have_selector "#approved-card li.due", text: "3.00 USD (2011-03)"
