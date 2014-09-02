@@ -9,4 +9,7 @@ Rails.application.routes.draw do
   end
   resources :users, only: [:edit, :update]
   resources :exchange_rates, except: [:new, :show]
+
+  # In case this was linked to before the readme became the root_path
+  get "/dashboard/readme", to: "dashboard#readme"
 end
