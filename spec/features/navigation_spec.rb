@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 feature "Navigation" do
-  scenario "Clicking the Dashboard link navigates to the dashboard (home page)" do
+  scenario "Clicking the Dashboard link navigates to the dashboard" do
     user = create(:user)
     visit expenses_path(as: user)
     click_link "Dashboard"
-    expect(current_path).to eq root_path
+    expect(current_path).to eq dashboard_path
   end
 
   scenario "Clicking the Expenses link navigates to the expense index page" do
