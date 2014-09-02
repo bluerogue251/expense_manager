@@ -1,0 +1,22 @@
+table#expenses.hover
+  thead
+    tr
+      td
+      td Date
+      td Category
+      td Description
+      td Currency
+      td Amount
+      td Status
+      td
+  tbody
+    each expense in controller
+      tr
+        td
+        td = expense.date
+        td = expense.description
+        td = expense.description
+        td = expense.currency
+        td = expense.amount
+        td = expense.status
+        td

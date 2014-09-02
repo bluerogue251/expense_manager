@@ -32,6 +32,10 @@ gem 'faker'
 gem "factory_girl_rails"
 gem "progress_bar"
 gem "redcarpet"
+gem "ember-rails"
+gem "ember-source", "1.5.0"
+gem "emblem-rails"
+
 
 group :development do
   gem "foreman"

@@ -20,6 +20,8 @@ GEM
       activesupport (= 4.1.4)
       builder (~> 3.1)
       erubis (~> 2.7.0)
+    active_model_serializers (0.9.0)
+      activemodel (>= 3.2)
     activemodel (4.1.4)
       activesupport (= 4.1.4)
       builder (~> 3.1)
@@ -39,6 +41,13 @@ GEM
       multi_json
     arel (5.0.1.20140414130214)
     awesome_print (1.2.0)
+    barber (0.4.2)
+      ember-source
+      execjs
+      handlebars-source
+    barber-emblem (0.1.1)
+      barber (>= 0.4.1)
+      emblem-source
     bcrypt (3.1.7)
     bourbon (3.2.3)
       sass (~> 3.2)
@@ -96,6 +105,23 @@ GEM
       dotenv (= 0.11.1)
     email_validator (1.4.0)
       activemodel
+    ember-data-source (1.0.0.beta.9)
+      ember-source
+    ember-rails (0.15.0)
+      active_model_serializers
+      barber (>= 0.4.1)
+      ember-data-source (>= 1.0.0.beta.5)
+      ember-source (>= 1.1.0)
+      execjs (>= 1.2)
+      handlebars-source (> 1.0.0)
+      jquery-rails (>= 1.0.17)
+      railties (>= 3.1)
+    ember-source (1.5.0)
+      handlebars-source (~> 1.0)
+    emblem-rails (0.2.1)
+      barber-emblem (~> 0.1.1)
+      ember-rails (>= 0.14.0)
+    emblem-source (0.3.16)
     erubis (2.7.0)
     execjs (2.2.1)
     factory_girl (4.4.0)
@@ -115,6 +141,7 @@ GEM
       activesupport
       capybara
       i18n
+    handlebars-source (1.3.0)
     high_voltage (2.2.1)
     highline (1.6.21)
     hike (1.2.3)
@@ -294,6 +321,9 @@ DEPENDENCIES
   delayed_job_active_record
   dotenv-rails
   email_validator
+  ember-rails
+  ember-source (= 1.5.0)
+  emblem-rails
   factory_girl_rails
   faker
   flutie

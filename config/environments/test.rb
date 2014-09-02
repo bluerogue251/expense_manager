@@ -40,4 +40,6 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'www.example.com' }
 
   config.middleware.use Clearance::BackDoor
+
+  config.ember.variant = :development
 end

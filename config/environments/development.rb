@@ -40,4 +40,6 @@ Rails.application.configure do
 
 
   config.action_mailer.default_url_options = { host: 'expense_manager.local' }
+
+  config.ember.variant = :development
 end
