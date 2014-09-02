@@ -1,4 +1,4 @@
-class Users::ExpensesController < ApplicationController
+class User::ExpensesController < ApplicationController
 
   def index
     respond_to do |format|

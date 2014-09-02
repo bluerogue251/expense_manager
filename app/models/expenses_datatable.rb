@@ -50,10 +50,10 @@ class ExpensesDatatable
   end
 
   def edit_link(expense)
-    link_to fa_icon('pencil', text: 'edit'), [:edit, :users, expense], remote: true, id: "edit_expense_#{expense.id}", class: "edit"
+    link_to fa_icon('pencil', text: 'edit'), [:edit, :user, expense], remote: true, id: "edit_expense_#{expense.id}", class: "edit"
   end
 
   def destroy_link(expense)
-    link_to fa_icon('times', text: 'delete'), [:users, expense], method: :delete, remote: true, id: "destroy_expense_#{expense.id}", class: "destroy", data: { confirm: "Delete expense?" }
+    link_to fa_icon('times', text: 'delete'), [:user, expense], method: :delete, remote: true, id: "destroy_expense_#{expense.id}", class: "destroy", data: { confirm: "Delete expense?" }
   end
 end
