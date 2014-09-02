@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 feature "Reviewing (approving/rejecting) Expenses", js: :true, search: true do
   let(:user) { create(:user) }
