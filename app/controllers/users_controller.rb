@@ -27,7 +27,6 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name,
-                                 :email,
                                  :default_currency,
                                  job_title_assignments_attributes: [:id,
                                                                     :department_id,

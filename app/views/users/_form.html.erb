@@ -1,7 +1,7 @@
 <%= simple_form_for @user do |f| %>
   <div>
     <%= f.input :name %>
-    <%= f.input :email %>
+    <%= f.input :email, disabled: true %>
     <%= f.input :default_currency, collection: ExchangeRate::CURRENCIES, required: true %>
   </div>
   <div>
