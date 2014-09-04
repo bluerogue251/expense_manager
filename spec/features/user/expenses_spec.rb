@@ -80,4 +80,3 @@ feature "Expenses", js: true, search: true do
     expect(page).to have_selector "td", text: a_desc, count: 9
   end
 end
-

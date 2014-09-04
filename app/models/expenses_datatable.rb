@@ -28,7 +28,6 @@ class ExpensesDatatable
     end
   end
 
-
   def data
     get_records.results.map do |expense|
       [
