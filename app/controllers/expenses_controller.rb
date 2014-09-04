@@ -10,11 +10,11 @@ class ExpensesController < ApplicationController
   end
 
   def approve
-    change_expense_status("Pending")
+    change_expense_status("Approved")
   end
 
   def reject
-    change_expense_status("Pending")
+    change_expense_status("Rejected")
   end
 
   def pend
