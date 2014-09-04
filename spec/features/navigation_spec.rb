@@ -3,7 +3,7 @@ require 'spec_helper'
 feature "Navigation" do
   scenario "Clicking the Dashboard link navigates to the dashboard" do
     user = create(:user)
-    visit expenses_path(as: user)
+    visit user_expenses_path(as: user)
     click_link "Dashboard"
     expect(current_path).to eq dashboard_path
   end
@@ -12,7 +12,7 @@ feature "Navigation" do
     user = create(:user)
     visit root_path(as: user)
     click_link "My expenses"
-    expect(current_path).to eq expenses_path
+    expect(current_path).to eq user_expenses_path
   end
 
   scenario "Clicking the Profile link navigates to the profile page" do
@@ -26,7 +26,7 @@ feature "Navigation" do
     user = create(:user)
     visit root_path(as: user)
     click_link "All expenses"
-    expect(current_path).to eq review_expenses_path
+    expect(current_path).to eq expenses_path
   end
 
   scenario "Clicking the Exchange Rates link navigates to the exchange rates page" do

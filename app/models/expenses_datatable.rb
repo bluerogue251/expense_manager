@@ -1,33 +1,27 @@
 class ExpensesDatatable
   include DatatablesHelper
-  delegate :params, :link_to, :fa_icon, :number_with_precision, to: :view_context
   attr_reader :view_context
+  delegate :params, :link_to, :fa_icon, :number_with_precision, to: :view_context
 
-  def initialize(view_context, current_user_id)
+  def initialize(view_context)
     @view_context    = view_context
-    @current_user_id = current_user_id
     @display_records = get_records
   end
 
   private
 
   def columns
-    %i(s_user_name s_date s_category_name s_description s_currency s_amount s_status s_user_name)
-  end
-
-  def current_user_id
-    @current_user_id
+    %w(s_user_name s_department_name s_job_title_name s_date s_category_name s_description s_currency s_amount s_status s_user_name s_user_name)
   end
 
   def total_record_count
-    Expense.search { with(:user_id, current_user_id) }.total
+    Expense.search.total
   end
 
   def get_records
     c = sort_column
     d = sort_direction
     Expense.search do
-      with(:user_id, current_user_id)
       fulltext params[:sSearch]
       order_by(c, d)
       paginate page: page, per_page: per
@@ -35,25 +29,50 @@ class ExpensesDatatable
   end
 
   def data
-    @display_records.results.map do |expense|
+    get_records.results.map do |expense|
       [
-        edit_link(expense),
+        expense.user_name,
+        expense.department_name,
+        expense.job_title_name,
         expense.date,
         expense.category_name,
         expense.description,
         expense.currency,
         number_with_precision(expense.amount, precision: 2),
         expense.status,
-        destroy_link(expense)
+        status_change_link_one(expense),
+        status_change_link_two(expense),
       ]
     end
   end
 
-  def edit_link(expense)
-    link_to fa_icon('pencil', text: 'edit'), [:edit, expense], remote: true, id: "edit_expense_#{expense.id}", class: "edit"
+  def status_change_link_one(expense)
+    expense.rejected? ? pend_link(expense) : reject_link(expense)
   end
 
-  def destroy_link(expense)
-    link_to fa_icon('times', text: 'delete'), expense, method: :delete, remote: true, id: "destroy_expense_#{expense.id}", class: "destroy", data: { confirm: "Delete expense?" }
+  def status_change_link_two(expense)
+    expense.approved? ? pend_link(expense) : approve_link(expense)
+  end
+
+  def status_change_link(expense, type, icon)
+    link_to fa_icon(icon, text: type),
+            [type, expense],
+            method: :patch,
+            remote: true,
+            id: "#{type}_expense_#{expense.id}",
+            class: "status-link #{type}",
+            data: { confirm: "#{type} expense?" }
+  end
+
+  def pend_link(expense)
+    status_change_link(expense, :pend, "step-backward")
+  end
+
+  def reject_link(expense)
+    status_change_link(expense, :reject, "times")
+  end
+
+  def approve_link(expense)
+    status_change_link(expense, :approve, "check")
   end
 end
