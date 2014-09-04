@@ -4,67 +4,33 @@ class ExpensesController < ApplicationController
     respond_to do |format|
       format.html
       format.json do
-        render json: ExpensesDatatable.new(view_context, current_user.id)
-      end
-    end
-  end
-
-  def review
-    respond_to do |format|
-      format.html
-      format.json do
-        render json: ReviewExpensesDatatable.new(view_context)
+        render json: ExpensesDatatable.new(view_context)
       end
     end
   end
 
   def approve
-    @expense = Expense.find(params[:id])
-    @expense.update!(status: "Approved")
-    render "update_status"
+    change_expense_status("Pending")
   end
 
   def reject
-    @expense = Expense.find(params[:id])
-    @expense.update!(status: "Rejected")
-    render "update_status"
+    change_expense_status("Pending")
   end
 
   def pend
-    @expense = Expense.find(params[:id])
-    @expense.update!(status: "Pending")
-    render "update_status"
-  end
-
-  def create
-    @expense = current_user.expenses.build(expense_params)
-    @expense.save
-    render "create_or_update"
-  end
-
-  def destroy
-    find_expense
-    @expense.destroy!
-  end
-
-  def edit
-    find_expense
-  end
-
-  def update
-    find_expense
-    @expense.update(expense_params)
-    render "create_or_update"
+    change_expense_status("Pending")
   end
 
   private
 
   def find_expense
-    @expense = current_user.expenses.find(params[:id])
+    @expense = Expense.find(params[:id])
   end
 
-  def expense_params
-    params.require(:expense).permit(:date, :category_id, :description, :currency, :amount)
+  def change_expense_status(new_status)
+    find_expense
+    @expense.update!(status: new_status)
+    render "update_status"
   end
 
 end
