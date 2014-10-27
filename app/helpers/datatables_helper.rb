@@ -1,5 +1,4 @@
 module DatatablesHelper
-
   def page
     params[:iDisplayStart].to_i/per + 1
   end
@@ -16,12 +15,17 @@ module DatatablesHelper
     columns[params[:iSortCol_0].to_i]
   end
 
-  def as_json(options={})
-    {
-      sEcho: params[:sEcho].to_i,
-      iTotalRecords: total_record_count,
-      iTotalDisplayRecords: @display_records.total,
-      aaData: data
-    }
+  def total_display_records
+    get_records.total
+  end
+
+  def s_echo
+    params[:sEcho].to_i
+  end
+
+  private
+
+  def params
+    @params
   end
 end

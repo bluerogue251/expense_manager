@@ -3,9 +3,7 @@ class ExpensesController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json do
-        render json: ExpensesDatatable.new(view_context)
-      end
+      format.json { @expenses = ExpensesDatatable.new(params) }
     end
   end
 
