@@ -2,7 +2,7 @@ class User::ExpensesController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json { @expenses = User::ExpensesDatatable.new(params, current_user.id) }
+      format.json { @expenses = Datatable.new(params, search_scope, columns) }
     end
   end
 
@@ -35,5 +35,13 @@ class User::ExpensesController < ApplicationController
 
   def expense_params
     params.require(:expense).permit(:date, :category_id, :description, :currency, :amount)
+  end
+
+  def search_scope
+    Sunspot.new_search(Expense) { with(:user_id, current_user.id) }
+  end
+
+  def columns
+    %i(s_user_name s_date s_category_name s_description s_currency s_amount s_status s_user_name)
   end
 end
