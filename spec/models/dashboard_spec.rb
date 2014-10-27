@@ -1,11 +1,21 @@
 require 'spec_helper'
 
 describe Dashboard do
-  it "Formats the month as yyyy-mm" do
-    user = User.new
-    date = Date.parse("2013-12-25")
-    dashboard = Dashboard.new(user, date)
-    expect(dashboard.month).to eq "2013-12"
+  describe "#month" do
+    it "Is formatted as yyyy-mm" do
+      user = User.new
+      date = Date.parse("2013-12-25")
+      dashboard = Dashboard.new(user, date)
+      expect(dashboard.month).to eq "2013-12"
+    end
+
+    it "Defaults to the previous month" do
+      Timecop.travel "2011-01-01" do
+        user = User.new
+        dashboard = Dashboard.new(user)
+        expect(dashboard.month). to eq "2010-12"
+      end
+    end
   end
 
   it "Has counts of Rejected and Pending expenses for a particular user" do
@@ -32,6 +42,17 @@ describe Dashboard do
       2.times { create(:expense, user: user, currency: "USD", amount: "100", status: "Pending") }
       dashboard = Dashboard.new(user)
       expect(dashboard.pending_total).to eq BigDecimal.new("1240")
+    end
+
+    specify "For approved expenses scoped to the specified month" do
+      user = create(:user, default_currency: "HKD")
+      create(:exchange_rate, anchor: "CAD", float: "HKD", rate: 5.95)
+      # Included in sum, becuase they are from the previous month
+      2.times { create(:expense, date: 1.month.ago,  user: user, currency: "CAD", amount: "250.99", status: "Approved") }
+      # NOT included in sum, becuase they are from two months ago
+      2.times { create(:expense, date: 2.months.ago, user: user, currency: "CAD", amount: "250.99", status: "Approved") }
+      dashboard = Dashboard.new(user, 1.month.ago)
+      expect(dashboard.approved_total).to eq BigDecimal.new("2986.781") # 250.99 * 2 * 5.95
     end
   end
 end
