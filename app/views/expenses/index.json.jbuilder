@@ -44,6 +44,5 @@ data = @expenses.data.map do |expense|
   ]
 end
 
-json.partial! 'shared/datatables_details', datatable: @expenses
-json.aaData data
+json.partial! 'shared/datatables_details', datatable: @expenses, data: data
 
