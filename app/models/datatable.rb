@@ -1,7 +1,10 @@
 class Datatable
-  def initialize(params, unfiltered_search, columns)
+  attr_reader :total_record_count
+
+  def initialize(params, search, columns)
     @params = params
-    @unfiltered_search = unfiltered_search
+    @total_record_count = search.execute.total
+    @search = search
     @columns = columns
   end
 
@@ -10,15 +13,11 @@ class Datatable
   end
 
   def filtered_search
-    @filtered_search ||= @unfiltered_search.build do
+    @filtered_search ||= @search.build do
       fulltext params[:sSearch]
       order_by(sort_column, sort_direction)
       paginate page: page, per_page: per
     end.execute
-  end
-
-  def total_record_count
-    @unfiltered_search.execute.total
   end
 
   def filtered_record_count
