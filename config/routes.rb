@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :users, only: [:edit, :update]
   resources :exchange_rates, except: [:new, :show]
 
-  namespace :user do
+  namespace :current_user do
     resources :expenses, only: [:index, :create, :edit, :update, :destroy]
   end
 
