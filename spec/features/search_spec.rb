@@ -9,7 +9,7 @@ feature "Searching", js: true, search: true do
     create(:expense, user: user, description: hotel)
     create(:expense, user: user, description: travel)
     Sunspot.commit
-    visit user_expenses_path(as: user)
+    visit current_user_expenses_path(as: user)
     expect(page).to have_content hotel
     expect(page).to have_content travel
     fill_in "Search", with: hotel

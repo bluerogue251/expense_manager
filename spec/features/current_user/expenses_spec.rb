@@ -8,7 +8,7 @@ feature "Expenses", js: true, search: true do
     create(:expense, description: signed_in_users_description, user: signed_in_user)
     create(:expense, description: other_users_description)
     Sunspot.commit
-    visit user_expenses_path(as: signed_in_user)
+    visit current_user_expenses_path(as: signed_in_user)
     expect(page).to     have_content signed_in_users_description
     expect(page).to_not have_content other_users_description
   end
@@ -16,7 +16,7 @@ feature "Expenses", js: true, search: true do
   scenario "Creating expense auto-assigns it to current_user" do
     user = create(:user)
     create(:category, name: "Test category")
-    visit user_expenses_path(as: user)
+    visit current_user_expenses_path(as: user)
     fast_fill_form(:expense, date: "2013-01-01", category: "Test category", description: "Test desc", currency: "CNY", amount: "12.19")
     click_button "Create Expense"
     Sunspot.commit
@@ -28,7 +28,7 @@ feature "Expenses", js: true, search: true do
   scenario "Creating expense with invalid data" do
     user = create(:user)
     create(:category, name: "Test category")
-    visit user_expenses_path(as: user)
+    visit current_user_expenses_path(as: user)
     fast_fill_form(:expense, date: "not-a-date", category: "Test category", description: "Test desc", currency: "CNY", amount: "12.19")
     click_button "Create Expense"
     Sunspot.commit
@@ -39,7 +39,7 @@ feature "Expenses", js: true, search: true do
     user = create(:user)
     expense = create(:expense, user: user, description: "Old description")
     Sunspot.commit
-    visit user_expenses_path(as: user)
+    visit current_user_expenses_path(as: user)
     click_link "edit"
     within "form#edit_expense_#{expense.id}" do
       fill_in "expense_description", with: "New description"
@@ -55,7 +55,7 @@ feature "Expenses", js: true, search: true do
     description = "test description"
     expense = create(:expense, user: user, description: description)
     Sunspot.commit
-    visit user_expenses_path(as: user)
+    visit current_user_expenses_path(as: user)
     expect(page).to have_content description
     click_link "destroy_expense_#{expense.id}"
     Sunspot.commit
@@ -70,7 +70,7 @@ feature "Expenses", js: true, search: true do
     10.times { create(:expense, user: user, description: a_desc) }
     create(:expense, user: user, description: z_desc)
     Sunspot.commit
-    visit user_expenses_path(as: user)
+    visit current_user_expenses_path(as: user)
     # First sort ascending
     find("td", text: "Description").click
     expect(page).to have_selector "td", text: a_desc, count: 10

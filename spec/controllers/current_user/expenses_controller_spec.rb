@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe User::ExpensesController do
+describe CurrentUser::ExpensesController do
   it "Scopes expenses through current_user" do
     sign_in
     other_users_expense = create(:expense)

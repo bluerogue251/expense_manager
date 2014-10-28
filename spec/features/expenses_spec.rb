@@ -52,7 +52,7 @@ feature "Reviewing (approving/rejecting) Expenses", js: :true, search: true do
     10.times { create(:expense, user: user, date: early_date) }
     create(:expense, user: user, date: late_date)
     Sunspot.commit
-    visit user_expenses_path(as: user)
+    visit current_user_expenses_path(as: user)
     # First sort ascending
     find("td", text: "Date").click
     expect(page).to have_selector "td", text: early_date, count: 10
