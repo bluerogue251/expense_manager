@@ -3,7 +3,7 @@ module CurrentUser
     def index
       respond_to do |format|
         format.html
-        format.json { @expenses = Datatable.new(params, search_scope, columns) }
+        format.json { @expenses = Datatable.new(params, UserExpenseSearch.new(current_user)) }
       end
     end
 
@@ -36,14 +36,6 @@ module CurrentUser
 
     def expense_params
       params.require(:expense).permit(:date, :category_id, :description, :currency, :amount)
-    end
-
-    def search_scope
-      Sunspot.new_search(Expense) { with(:user_id, current_user.id) }
-    end
-
-    def columns
-      %i(s_user_name s_date s_category_name s_description s_currency s_amount s_status s_user_name)
     end
   end
 end

@@ -2,7 +2,7 @@ class ExpensesController < ApplicationController
   def index
     respond_to do |format|
       format.html
-      format.json { @expenses = Datatable.new(params, search_scope, columns) }
+      format.json { @expenses = Datatable.new(params, ExpensesSearch.new) }
     end
   end
 
@@ -28,13 +28,5 @@ class ExpensesController < ApplicationController
     find_expense
     @expense.update!(status: new_status)
     render "update_status"
-  end
-
-  def search_scope
-    Sunspot.new_search(Expense)
-  end
-
-  def columns
-    %i(s_user_name s_department s_job_title s_date s_category_name s_description s_currency s_amount s_status s_user_name s_user_name)
   end
 end
