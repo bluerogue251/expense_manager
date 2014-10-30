@@ -1,11 +1,11 @@
 class Datatable
   attr_reader :total_record_count
 
-  def initialize(params, search, columns)
+  def initialize(params, input)
     @params = params
-    @total_record_count = search.execute.total
-    @search = search
-    @columns = columns
+    @total_record_count = input.search.execute.total
+    @search = input.search
+    @columns = input.columns
   end
 
   def s_echo
