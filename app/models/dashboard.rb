@@ -1,13 +1,7 @@
 class Dashboard
-
-  attr_reader :currency, :previous_month, :month, :next_month
-
-  def initialize(user, date=1.month.ago)
-    @user           = user
-    @currency       = user.default_currency
-    @previous_month = (date - 1.month).to_date
-    @month          = year_month(date)
-    @next_month     = (date + 1.month).to_date
+  def initialize(user, date)
+    @user = user
+    @date = date
   end
 
   def rejected_count
@@ -23,32 +17,49 @@ class Dashboard
   end
 
   def rejected_total
-    rejected_expenses.sum_in(@currency)
+    rejected_expenses.sum_in(currency)
   end
 
   def pending_total
-    pending_expenses.sum_in(@currency)
+    pending_expenses.sum_in(currency)
   end
 
   def approved_total
-    expenses.for_month(@month).approved.sum_in(@currency)
+    expenses.for_month(month).approved.sum_in(currency)
+  end
+
+  def month
+    year_month(date)
+  end
+
+  def previous_month
+    date - 1.month
+  end
+
+  def next_month
+    date + 1.month
+  end
+
+  def currency
+    user.default_currency
   end
 
   private
+  attr_reader :user, :date
 
   def expenses
-    @user.expenses
+    user.expenses
   end
 
   def rejected_expenses
-    expenses.rejected
+    @rejected_expenses ||= expenses.rejected
   end
 
   def pending_expenses
-    expenses.pending
+    @pending_expenses ||= expenses.pending
   end
 
   def approved_expenses
-    expenses.approved
+    @approved_expenses ||= expenses.approved
   end
 end
