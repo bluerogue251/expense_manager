@@ -12,14 +12,6 @@ class Datatable
     params[:sEcho].to_i
   end
 
-  def filtered_search
-    @filtered_search ||= @search.build do
-      fulltext params[:sSearch]
-      order_by(sort_column, sort_direction)
-      paginate page: page, per_page: per
-    end.execute
-  end
-
   def filtered_record_count
     filtered_search.total
   end
@@ -31,6 +23,14 @@ class Datatable
   private
 
   attr_reader :params, :columns
+
+  def filtered_search
+    @filtered_search ||= @search.build do
+      fulltext params[:sSearch]
+      order_by(sort_column, sort_direction)
+      paginate page: page, per_page: per
+    end.execute
+  end
 
   def page
     (params[:iDisplayStart].to_i / per) + 1
