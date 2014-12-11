@@ -1,3 +1,9 @@
+# Inspired by http://railscasts.com/episodes/340-datatables
+#
+# This implementation expands on that basic idea by injecting a dependency on
+# Sunspot for full text search and ordering, rather than using database level
+# solutions such as "LIKE '%..%'" clauses.
+
 class Datatable
   attr_reader :total_record_count
 

@@ -35,16 +35,13 @@ class Expense < ActiveRecord::Base
   end
   handle_asynchronously :solr_index
 
+  # In theory, currency should not have to be sanitized because it comes from
+  # the expenses.currency database column, which should have been validated
+  # against a list of approved currencies. This method and the
+  # self.joins_exchange_rates methods sanitize them anyways just in case
   def self.sum_in(currency)
     joins_exchange_rates(currency)
-    .sum("CASE WHEN expenses.currency = '#{currency}' THEN expenses.amount ELSE (expenses.amount * exchange_rates.rate) END")
-  end
-
-  def self.joins_exchange_rates(currency)
-    joins("LEFT OUTER JOIN exchange_rates
-             ON exchange_rates.anchor = expenses.currency
-             AND exchange_rates.float = '#{currency}'
-             AND expenses.date BETWEEN exchange_rates.starts_on AND exchange_rates.ends_on")
+    .sum("CASE WHEN expenses.currency = #{sanitize(currency)} THEN expenses.amount ELSE (expenses.amount * exchange_rates.rate) END")
   end
 
   def approved?
@@ -58,4 +55,14 @@ class Expense < ActiveRecord::Base
   def pending?
     status == "Pending"
   end
+
+  private
+
+  def self.joins_exchange_rates(currency)
+    joins("LEFT OUTER JOIN exchange_rates
+             ON exchange_rates.anchor = expenses.currency
+             AND exchange_rates.float = #{sanitize(currency)}
+             AND expenses.date BETWEEN exchange_rates.starts_on AND exchange_rates.ends_on")
+  end
+  private_class_method :joins_exchange_rates
 end
