@@ -5,13 +5,13 @@ Expense manager
 [![Code Climate](https://codeclimate.com/github/bluerogue251/expense_manager/badges/gpa.svg)](https://codeclimate.com/github/bluerogue251/expense_manager)
 [![Coverage Status](https://coveralls.io/repos/bluerogue251/expense_manager/badge.png)](https://coveralls.io/r/bluerogue251/expense_manager)
 
-This is a Ruby-on-Rails application for tracking company expenses. The code is open source on [GitHub](https://github.com/bluerogue251/expense_manager), and there is a live demo on [Heroku](http://expensemanager.teddywidom.com). Here are some interesting aspects:
+This is a Ruby-on-Rails application for tracking company expenses. Here are some interesting aspects:
 
 ## The facade pattern
 The dashboard shows users several pieces of loosely related data together. Instead of reaching across many different models from the controller or view, I created [a new object](https://github.com/bluerogue251/expense_manager/blob/master/app/models/dashboard.rb) to serve as a single interface (or "Facade") to all the data that is displayed in the view. This makes it possible to access data from a complex API while keeping the [controller simple](https://github.com/bluerogue251/expense_manager/blob/master/app/controllers/dashboard_controller.rb) and the logic [easy to test](https://github.com/bluerogue251/expense_manager/blob/master/spec/models/dashboard_spec.rb).
 
 ## Scalable spreadsheet-like searching and sorting
-Users can search and sort large amounts of data (the demo has over 200,000 records) with online "spreadsheets". [`app/models/user_expense_search`](https://github.com/bluerogue251/expense_manager/blob/master/app/models/user_expense_search.rb) and [`app/models/datatable`](https://github.com/bluerogue251/expense_manager/blob/master/app/models/datatable.rb) are responsible for returning JSON compatible with the DataTables.js API, while using Sunspot for searching and ordering.
+Users can search and sort large amounts of data with online "spreadsheets". [`app/models/user_expense_search`](https://github.com/bluerogue251/expense_manager/blob/master/app/models/user_expense_search.rb) and [`app/models/datatable`](https://github.com/bluerogue251/expense_manager/blob/master/app/models/datatable.rb) are responsible for returning JSON compatible with the DataTables.js API, while using Sunspot for searching and ordering.
 
 Sunspot auto-indexes expenses after they are saved or deleted. In addition, I added a [mixin module](https://github.com/bluerogue251/expense_manager/blob/master/app/models/concerns/reindex_expenses_after_save.rb) to the related `User`, `Department`, and `JobTitle` classes. Whenever a record changes, the module creates a [simple background job](https://github.com/bluerogue251/expense_manager/blob/master/app/models/expense_reindexer.rb) to reindex their associated expenses.
 
